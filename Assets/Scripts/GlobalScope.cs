@@ -5,6 +5,5 @@ public class GlobalScope : LifetimeScope
 {
     protected override void Configure(IContainerBuilder builder)
     {
-        
     }
 }
