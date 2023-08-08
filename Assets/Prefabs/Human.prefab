@@ -386,5 +386,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30856637fc2a41cbac9f397b56cb9bdb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ignore:
+    serializedVersion: 2
+    m_Bits: 64
+  radius: 5
   distance: 50
   playerCamera: {fileID: 101243555488617055}

@@ -6,6 +6,7 @@ namespace Characters.Human
 {
     public class HumanWatchingController : NetworkBehaviour
     {
+        [SerializeField] private LayerMask ignore;
         [SerializeField] private float distance;
         [SerializeField] private Transform playerCamera;
         private HumanHealthView _humanHealthView;
@@ -23,7 +24,7 @@ namespace Characters.Human
         private void CheckForSlender()
         {
             var ray = new Ray(playerCamera.position, playerCamera.forward);
-            if (Physics.Raycast(ray, out var hit, distance))
+            if (Physics.Raycast(ray, out var hit, distance, ~ignore))
             {
                 if (hit.transform.TryGetComponent(out SlenderMovementView _))
                 {
