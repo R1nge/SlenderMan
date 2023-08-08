@@ -340,6 +340,7 @@ MonoBehaviour:
   maxLimit: 90
   sensitivity: 2
   playerCamera: {fileID: 545246850703540131}
+  audioListener: {fileID: 121682910647716335}
 --- !u!114 &-5812672665701414206
 MonoBehaviour:
   m_ObjectHideFlags: 0

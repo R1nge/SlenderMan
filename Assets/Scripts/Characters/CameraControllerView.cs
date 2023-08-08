@@ -8,6 +8,7 @@ namespace Characters
         [SerializeField] private float minLimit, maxLimit;
         [SerializeField] private float sensitivity;
         [SerializeField] private Camera playerCamera;
+        [SerializeField] private AudioListener audioListener;
         private CameraController _cameraController;
 
         private void Awake()
@@ -20,6 +21,7 @@ namespace Characters
         public override void OnNetworkSpawn()
         {
             playerCamera.enabled = NetworkObject.IsOwner;
+            audioListener.enabled = NetworkObject.IsOwner;
         }
 
         private void Update()
