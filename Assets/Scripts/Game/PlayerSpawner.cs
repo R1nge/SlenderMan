@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using Characters.Slender;
 using Lobby;
-using Unity.Mathematics;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -60,6 +60,9 @@ namespace Game
             }
 
             instance.GetComponent<NetworkObject>().SpawnAsPlayerObject(id, true);
+            
+            //TODO: find a better way
+            instance.GetComponent<SlenderVisibilityControllerView>().Construct(_lobby);
         }
     }
 }

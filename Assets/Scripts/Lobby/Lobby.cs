@@ -7,6 +7,8 @@ namespace Lobby
     {
         private Dictionary<ulong, LobbyData> _lobbyData = new();
 
+        public int GetPlayerCount() => _lobbyData.Count;
+
         public void SelectSlender(string name, ulong id)
         {
             if (_lobbyData.ContainsKey(id))

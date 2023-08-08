@@ -25,6 +25,7 @@ namespace Game
             var name = data.Name;
             var team = data.Team;
             print($"Name: {name}; Team: {team}");
+            print($"Length: {_lobby.GetPlayerCount()}");
         }
     }
 }

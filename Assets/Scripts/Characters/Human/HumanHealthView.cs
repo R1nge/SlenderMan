@@ -19,7 +19,7 @@ namespace Characters.Human
         {
             if (_isDead.Value)
             {
-                Debug.LogError($"Trying to increase health on the dead player", this);
+                Debug.LogError("Trying to increase health on the dead player", this);
                 return;
             }
 
@@ -37,7 +37,7 @@ namespace Characters.Human
         {
             if (_isDead.Value)
             {
-                Debug.LogError($"Trying to reduce health on the dead player", this);
+                Debug.LogError("Trying to reduce health on the dead player", this);
                 return;
             }
 

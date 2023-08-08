@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 2549916278415779701}
   - component: {fileID: -7162138618484502605}
   - component: {fileID: -4682441334720666744}
+  - component: {fileID: 8433960669754768498}
   m_Layer: 7
   m_Name: Slender
   m_TagString: Untagged
@@ -69,7 +70,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 917e203c566842e4fb81de958806c64b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -232,9 +233,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d619150c6306433fafedcccaec8fd821, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  layer:
-    serializedVersion: 2
-    m_Bits: 64
+--- !u!114 &8433960669754768498
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3959837538732354524}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e685027de1f640ab9e7cd16c7a9e86ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mesh: {fileID: 4927228017414958267}
 --- !u!1 &7509674815603653897
 GameObject:
   m_ObjectHideFlags: 0
