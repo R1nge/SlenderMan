@@ -9,7 +9,7 @@ namespace Characters.Slender
         [SerializeField] private float visibleSpeed = 5f;
         [SerializeField] private float invisibleSpeed = 14f;
         [SerializeField] private float gravity = 20f;
-        private bool _visible;
+        private bool _visible = true;
         private CharacterController _characterController;
         private SlenderMovement _slenderMovement;
 

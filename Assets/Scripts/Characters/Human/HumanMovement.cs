@@ -34,8 +34,8 @@ namespace Characters.Human
             Vector3 forward = player.TransformDirection(Vector3.forward);
             Vector3 right = player.TransformDirection(Vector3.right);
 
-            float curSpeedX = run ? _runningSpeed : _walkingSpeed * Input.GetAxis("Vertical");
-            float curSpeedY = run ? _runningSpeed : _walkingSpeed * Input.GetAxis("Horizontal");
+            float curSpeedX = (run ? _runningSpeed : _walkingSpeed) * Input.GetAxis("Vertical");
+            float curSpeedY = (run ? _runningSpeed : _walkingSpeed) * Input.GetAxis("Horizontal");
             _moveDirection = forward * curSpeedX + right * curSpeedY;
 
 
