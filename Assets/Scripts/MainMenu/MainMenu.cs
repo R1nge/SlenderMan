@@ -19,7 +19,7 @@ namespace MainMenu
 
         public void LoadLobby()
         {
-            NetworkManager.Singleton.SceneManager.LoadScene("Lobby", LoadSceneMode.Additive);
+            NetworkManager.Singleton.SceneManager.LoadScene("Lobby", LoadSceneMode.Single);
         }
     }
 }

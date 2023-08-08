@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8513912213417955644}
-  - component: {fileID: 5905222212888895517}
   - component: {fileID: 8864300836069381055}
+  - component: {fileID: 5905222212888895517}
   m_Layer: 0
   m_Name: PlayerSpawner
   m_TagString: Untagged
@@ -33,20 +33,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5905222212888895517
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1512516338729368803}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6ad27d37f27e4e0a9d74f3f7a1bdbccd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  slender: {fileID: 3959837538732354524, guid: b2b5eab55fb90dc489e3bae5aca033bb, type: 3}
-  human: {fileID: 4887141664132616284, guid: 584595f2d31c4714bb3785b5e874a84b, type: 3}
 --- !u!114 &8864300836069381055
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -67,3 +53,17 @@ MonoBehaviour:
   SpawnWithObservers: 1
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
+--- !u!114 &5905222212888895517
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1512516338729368803}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ad27d37f27e4e0a9d74f3f7a1bdbccd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slender: {fileID: 3959837538732354524, guid: b2b5eab55fb90dc489e3bae5aca033bb, type: 3}
+  human: {fileID: 4887141664132616284, guid: 584595f2d31c4714bb3785b5e874a84b, type: 3}

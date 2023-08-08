@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using Lobby;
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using VContainer;
 using VContainer.Unity;
 
@@ -20,10 +22,21 @@ namespace Game
             _lobby = lobby;
         }
 
-        private void Start()
+        private void Awake()
+        {
+            NetworkManager.Singleton.SceneManager.OnLoadEventCompleted += OnLoad;
+        }
+
+        private void OnLoad(
+            string sceneName,
+            LoadSceneMode mode,
+            List<ulong> clientsCompleted,
+            List<ulong> clientTimedout
+        )
         {
             SpawnServerRpc();
         }
+
 
         [ServerRpc(RequireOwnership = false)]
         private void SpawnServerRpc(ServerRpcParams rpcParams = default)
@@ -43,7 +56,7 @@ namespace Game
                     throw new ArgumentOutOfRangeException(nameof(team), team, null);
             }
 
-            instance.GetComponent<NetworkObject>().SpawnWithOwnership(id);
+            instance.GetComponent<NetworkObject>().SpawnAsPlayerObject(id, true);
         }
     }
 }
