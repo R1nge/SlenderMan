@@ -7,14 +7,14 @@ namespace MainMenu
     {
         public void Host()
         {
-            NetworkManager.Singleton.StartHost();
             SceneManager.UnloadSceneAsync("MainMenu");
+            NetworkManager.Singleton.StartHost();
         }
 
         public void Join()
         {
-            NetworkManager.Singleton.StartClient();
             SceneManager.UnloadSceneAsync("MainMenu");
+            NetworkManager.Singleton.StartClient();
         }
 
         public void LoadLobby()
