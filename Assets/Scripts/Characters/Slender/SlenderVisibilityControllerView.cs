@@ -1,7 +1,5 @@
-﻿using System;
-using Unity.Netcode;
+﻿using Unity.Netcode;
 using UnityEngine;
-using VContainer;
 
 namespace Characters.Slender
 {
@@ -37,10 +35,7 @@ namespace Characters.Slender
         [ServerRpc]
         private void ChangeVisibilityServerRpc()
         {
-            print("CHANGE");
             _isVisible = !_isVisible;
-
-            print($"PlayerCount: {_lobby.GetPlayerCount()}");
             
             for (int i = 0; i < _lobby.GetPlayerCount(); i++)
             {
@@ -48,8 +43,7 @@ namespace Characters.Slender
                 {
                     continue;       
                 }
-
-
+                
                 if (_isVisible)
                 {
                     NetworkObject.NetworkHide(_lobby.GetData((ulong)i).Id);
@@ -58,8 +52,6 @@ namespace Characters.Slender
                 {
                     NetworkObject.NetworkShow(_lobby.GetData((ulong)i).Id);
                 }
-                
-                print("CHNAGED");
             }
         }
     }

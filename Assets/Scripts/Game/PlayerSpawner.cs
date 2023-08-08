@@ -62,7 +62,11 @@ namespace Game
             instance.GetComponent<NetworkObject>().SpawnAsPlayerObject(id, true);
             
             //TODO: find a better way
-            instance.GetComponent<SlenderVisibilityControllerView>().Construct(_lobby);
+            //I can make a class, which resolves all dependencies and then inject/grab them from it
+            if (instance.TryGetComponent(out SlenderVisibilityControllerView slenderVisibility))
+            {
+                slenderVisibility.Construct(_lobby);
+            }
         }
     }
 }

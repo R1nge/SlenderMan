@@ -9,7 +9,7 @@ public class SetLayer : NetworkBehaviour
     private IEnumerator Start()
     {
         if (!NetworkObject.IsOwner) yield break;
-        yield return new WaitForSeconds(10);
+        yield return new WaitForSeconds(2);
         var players = FindObjectsByType<HumanMovementView>(FindObjectsInactive.Include, FindObjectsSortMode.None);
         foreach (var player in players)
         {
