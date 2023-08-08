@@ -17,7 +17,8 @@ GameObject:
   - component: {fileID: 5141156269221904236}
   - component: {fileID: 2549916278415779701}
   - component: {fileID: -7162138618484502605}
-  m_Layer: 0
+  - component: {fileID: -4682441334720666744}
+  m_Layer: 7
   m_Name: Slender
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -219,6 +220,21 @@ MonoBehaviour:
   visibleSpeed: 5
   invisibleSpeed: 14
   gravity: 20
+--- !u!114 &-4682441334720666744
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3959837538732354524}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d619150c6306433fafedcccaec8fd821, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  layer:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!1 &7509674815603653897
 GameObject:
   m_ObjectHideFlags: 0
@@ -231,7 +247,7 @@ GameObject:
   - component: {fileID: 2742719832719155013}
   - component: {fileID: 7242995696995404060}
   - component: {fileID: 2299318216126303295}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}

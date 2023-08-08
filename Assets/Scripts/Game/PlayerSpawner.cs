@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using Lobby;
+using Unity.Mathematics;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using VContainer;
 using VContainer.Unity;
+using Random = UnityEngine.Random;
 
 namespace Game
 {
@@ -44,13 +46,14 @@ namespace Game
             GameObject instance;
             var id = rpcParams.Receive.SenderClientId;
             var team = _lobby.GetData(id).Team;
+            var position = new Vector3(Random.Range(-5, 5), 1, Random.Range(-5, 5));
             switch (team)
             {
                 case Teams.Slender:
-                    instance = _objectResolver.Instantiate(slender);
+                    instance = _objectResolver.Instantiate(slender, position, Quaternion.identity);
                     break;
                 case Teams.Human:
-                    instance = _objectResolver.Instantiate(human);
+                    instance = _objectResolver.Instantiate(human, position, Quaternion.identity);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(team), team, null);
