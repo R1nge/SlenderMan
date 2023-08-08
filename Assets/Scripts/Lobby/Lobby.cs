@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace Lobby
 {
@@ -8,12 +9,24 @@ namespace Lobby
 
         public void SelectSlender(string name, ulong id)
         {
+            if (_lobbyData.ContainsKey(id))
+            {
+                Debug.LogError("Lobby: Team already selected");
+                return;
+            }
+
             var data = new LobbyData(name, id, Teams.Slender);
             _lobbyData.Add(id, data);
         }
-        
+
         public void SelectHuman(string name, ulong id)
         {
+            if (_lobbyData.ContainsKey(id))
+            {
+                Debug.LogError("Lobby: Team already selected");
+                return;
+            }
+
             var data = new LobbyData(name, id, Teams.Human);
             _lobbyData.Add(id, data);
         }

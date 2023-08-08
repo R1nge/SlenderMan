@@ -19,10 +19,12 @@ namespace Game
         }
 
         [ServerRpc(RequireOwnership = false)]
-        private void GetDataServerRpc()
+        private void GetDataServerRpc(ServerRpcParams rpcParams = default)
         {
-            print(_lobby.GetData(0).Name);
-            print(_lobby.GetData(1).Name);
+            var data = _lobby.GetData(rpcParams.Receive.SenderClientId);
+            var name = data.Name;
+            var team = data.Team;
+            print($"Name: {name}; Team: {team}");
         }
     }
 }
