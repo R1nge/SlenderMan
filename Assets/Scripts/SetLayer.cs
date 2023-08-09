@@ -1,19 +1,35 @@
 ﻿using System.Collections;
 using Characters.Human;
+using Game.States;
 using Unity.Netcode;
 using UnityEngine;
+using VContainer;
 
 public class SetLayer : NetworkBehaviour
 {
-    //TODO: redo, activate it on game start
-    private IEnumerator Start()
+    private StateManager _stateManager;
+
+    [Inject]
+    private void Construct(StateManager stateManager)
     {
-        if (!NetworkObject.IsOwner) yield break;
-        yield return new WaitForSeconds(2);
-        var players = FindObjectsByType<HumanMovementView>(FindObjectsInactive.Include, FindObjectsSortMode.None);
-        foreach (var player in players)
+        _stateManager = stateManager;
+    }
+
+    private void Start()
+    {
+        _stateManager.OnStateChanged += OnGameStarted;
+    }
+
+    private void OnGameStarted(StateManager.States state)
+    {
+        if (!NetworkObject.IsOwner) return;
+        if (state == StateManager.States.Game)
         {
-            player.gameObject.layer = LayerMask.NameToLayer("Human");
+            var players = FindObjectsByType<HumanMovementView>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+            foreach (var player in players)
+            {
+                player.gameObject.layer = LayerMask.NameToLayer("Human");
+            }
         }
     }
 }
