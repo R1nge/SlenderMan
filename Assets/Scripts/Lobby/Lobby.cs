@@ -11,26 +11,30 @@ namespace Lobby
 
         public void SelectSlender(string name, ulong id)
         {
+            var data = new LobbyData(name, id, Teams.Slender);
             if (_lobbyData.ContainsKey(id))
             {
-                Debug.LogError("Lobby: Team already selected");
-                return;
+                Debug.Log("Lobby: Swapped team to Slender");
+                _lobbyData[id] = data;
             }
-
-            var data = new LobbyData(name, id, Teams.Slender);
-            _lobbyData.Add(id, data);
+            else
+            {
+                _lobbyData.Add(id, data);
+            }
         }
 
         public void SelectHuman(string name, ulong id)
         {
+            var data = new LobbyData(name, id, Teams.Human);
             if (_lobbyData.ContainsKey(id))
             {
-                Debug.LogError("Lobby: Team already selected");
-                return;
+                Debug.Log("Lobby: Swapped team to Human");
+                _lobbyData[id] = data;
             }
-
-            var data = new LobbyData(name, id, Teams.Human);
-            _lobbyData.Add(id, data);
+            else
+            {
+                _lobbyData.Add(id, data);
+            }
         }
 
         public LobbyData GetData(ulong id) => _lobbyData[id];
