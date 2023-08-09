@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Characters.Slender;
+using Game.States;
 using Lobby;
 using Unity.Netcode;
 using UnityEngine;
@@ -16,12 +17,14 @@ namespace Game
         [SerializeField] private GameObject slender, human;
         private IObjectResolver _objectResolver;
         private Lobby.Lobby _lobby;
+        private StateManager _stateManager;
 
         [Inject]
-        private void Construct(IObjectResolver objectResolver, Lobby.Lobby lobby)
+        private void Construct(IObjectResolver objectResolver, Lobby.Lobby lobby, StateManager stateManager)
         {
             _objectResolver = objectResolver;
             _lobby = lobby;
+            _stateManager = stateManager;
         }
 
         private void Awake()
@@ -29,20 +32,17 @@ namespace Game
             NetworkManager.Singleton.SceneManager.OnLoadEventCompleted += OnLoad;
         }
 
-        private void OnLoad(
-            string sceneName,
-            LoadSceneMode mode,
-            List<ulong> clientsCompleted,
-            List<ulong> clientTimedout
-        )
+        private void OnLoad(string _, LoadSceneMode __, List<ulong> loaded, List<ulong> ____)
         {
-            SpawnServerRpc();
+            SpawnServerRpc(loaded.Count);
         }
 
-
         [ServerRpc(RequireOwnership = false)]
-        private void SpawnServerRpc(ServerRpcParams rpcParams = default)
+        private void SpawnServerRpc(int loadedCount, ServerRpcParams rpcParams = default)
         {
+            if (loadedCount != _lobby.GetPlayerCount()) return;
+            if (_stateManager.CurrentState != StateManager.States.Warmup) return;
+            
             GameObject instance;
             var id = rpcParams.Receive.SenderClientId;
             var team = _lobby.GetData(id).Team;
@@ -60,7 +60,7 @@ namespace Game
             }
 
             instance.GetComponent<NetworkObject>().SpawnAsPlayerObject(id, true);
-            
+
             //TODO: find a better way
             //I can make a class, which resolves all dependencies and then inject/grab them from it
             if (instance.TryGetComponent(out SlenderVisibilityControllerView slenderVisibility))
