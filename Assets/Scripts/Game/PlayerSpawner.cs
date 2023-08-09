@@ -26,23 +26,10 @@ namespace Game
             _lobby = lobby;
             _stateManager = stateManager;
         }
-
-        private void Awake()
-        {
-            NetworkManager.Singleton.SceneManager.OnLoadEventCompleted += OnLoad;
-        }
-
-        private void OnLoad(string _, LoadSceneMode __, List<ulong> loaded, List<ulong> ____)
-        {
-            SpawnServerRpc(loaded.Count);
-        }
-
+        
         [ServerRpc(RequireOwnership = false)]
-        private void SpawnServerRpc(int loadedCount, ServerRpcParams rpcParams = default)
+        public void SpawnServerRpc(ServerRpcParams rpcParams = default)
         {
-            if (loadedCount != _lobby.GetPlayerCount()) return;
-            if (_stateManager.CurrentState != StateManager.States.Warmup) return;
-            
             GameObject instance;
             var id = rpcParams.Receive.SenderClientId;
             var team = _lobby.GetData(id).Team;
