@@ -8,6 +8,10 @@ namespace Characters.Human
         [SerializeField] private NetworkVariable<int> maxHealth, currentHealth;
         private NetworkVariable<bool> _isDead;
 
+        public NetworkVariable<int> CurrentHealth => currentHealth;
+        public NetworkVariable<int> MaxHealth => maxHealth;
+        public NetworkVariable<bool> IsDead => _isDead;
+
         private void Awake()
         {
             _isDead = new NetworkVariable<bool>();
