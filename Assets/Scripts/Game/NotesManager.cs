@@ -1,43 +1,49 @@
-﻿using Unity.Netcode;
+﻿using System;
+using Unity.Netcode;
 using UnityEngine;
 
 namespace Game
 {
     public class NotesManager : NetworkBehaviour
     {
+        public event Action OnAllNotesCollected;
         [SerializeField] private Note note;
         [SerializeField] private int notesAmount;
         [SerializeField] private Transform[] spawnPositions;
+        private int _spawnedAmount;
         private NetworkVariable<int> _collectedAmount;
 
         private void Awake()
         {
             _collectedAmount = new NetworkVariable<int>();
         }
-        
+
         public void SpawnNotes()
         {
-            int spawnAmount;
             if (notesAmount > spawnPositions.Length)
             {
-                spawnAmount = spawnPositions.Length;
+                _spawnedAmount = spawnPositions.Length;
             }
             else
             {
-                spawnAmount = notesAmount;
+                _spawnedAmount = notesAmount;
             }
-            
-            for (int i = 0; i < spawnAmount; i++)
+
+            for (int i = 0; i < _spawnedAmount; i++)
             {
                 var instance = Instantiate(note, spawnPositions[i].position, Quaternion.identity);
                 instance.GetComponent<NetworkObject>().Spawn(true);
             }
         }
-        
+
         public void Collect()
         {
             _collectedAmount.Value++;
-            print($"Note collected; Only {notesAmount - _collectedAmount.Value} notes left");
+            print($"Note collected; Only {_spawnedAmount - _collectedAmount.Value} notes left");
+            if (_collectedAmount.Value == _spawnedAmount)
+            {
+                OnAllNotesCollected?.Invoke();
+            }
         }
     }
 }
