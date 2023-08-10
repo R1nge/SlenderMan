@@ -50,6 +50,7 @@ namespace Game.States
         private void Warmup()
         {
             _playerSpawner.SpawnServerRpc();
+            NotesManager.Instance.SpawnNotes();
             print("WARMUP");
         }
 
