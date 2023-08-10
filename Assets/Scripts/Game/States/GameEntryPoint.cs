@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.Netcode;
 using UnityEngine.SceneManagement;
 
@@ -31,6 +32,7 @@ namespace Game.States
         private void Start()
         {
             StateManager.Instance.OnStateChanged += StateChanged;
+            if (!IsServer) return;
             if (StateManager.Instance.CurrentState == StateManager.States.Warmup)
             {
                 Warmup();
@@ -62,17 +64,33 @@ namespace Game.States
             {
                 _notesManager.SpawnNotes();
             }
-            
+
             print("WARMUP");
         }
 
         private void StartGame()
         {
             print("GAME");
+            //StartGameClientRpc();
+        }
+
+        [ClientRpc]
+        private void StartGameClientRpc()
+        {
+            if (IsServer) return;
+            print("GAME");
         }
 
         private void EndGame()
         {
+            print("ENDGAME");
+            //EndGameClientRpc();
+        }
+
+        [ClientRpc]
+        private void EndGameClientRpc()
+        {
+            if (IsServer) return;
             print("ENDGAME");
         }
 

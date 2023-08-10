@@ -43,7 +43,15 @@ namespace Game
             if (_collectedAmount.Value == _spawnedAmount)
             {
                 OnAllNotesCollected?.Invoke();
+                OnAllNotesCollectedClientRpc();
             }
+        }
+
+        [ClientRpc]
+        private void OnAllNotesCollectedClientRpc()
+        {
+            if(IsServer) return;
+            OnAllNotesCollected?.Invoke();
         }
     }
 }

@@ -50,6 +50,7 @@ namespace Game
         [ClientRpc]
         private void ChangeStateClientRpc()
         {
+            if(IsServer) return;
             StateManager.Instance.ChangeState(StateManager.States.Game);
             print("Changed state CLIENT");
         }
