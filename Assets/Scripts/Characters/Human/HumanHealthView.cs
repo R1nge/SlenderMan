@@ -1,4 +1,5 @@
-﻿using Unity.Netcode;
+﻿using Game;
+using Unity.Netcode;
 using UnityEngine;
 
 namespace Characters.Human
@@ -7,6 +8,7 @@ namespace Characters.Human
     {
         [SerializeField] private NetworkVariable<int> maxHealth, currentHealth;
         private NetworkVariable<bool> _isDead;
+        private PlayerSpawner _playerSpawner;
 
         public NetworkVariable<int> CurrentHealth => currentHealth;
         public NetworkVariable<int> MaxHealth => maxHealth;
@@ -15,6 +17,7 @@ namespace Characters.Human
         private void Awake()
         {
             _isDead = new NetworkVariable<bool>();
+            _playerSpawner = FindObjectOfType<PlayerSpawner>();
         }
 
         [ServerRpc(RequireOwnership = false)]
@@ -63,6 +66,7 @@ namespace Characters.Human
         {
             _isDead.Value = true;
             Debug.LogError("Player has died", this);
+            _playerSpawner.DeSpawnServerRpc(NetworkObject.NetworkObjectId);
         }
     }
 }

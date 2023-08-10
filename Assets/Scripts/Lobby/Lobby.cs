@@ -22,7 +22,6 @@ namespace Lobby
             Instance = this;
         }
 
-
         public int GetPlayerCount() => _lobbyData.Count;
 
         public ulong GetSlenderId()

@@ -1,7 +1,9 @@
 ﻿using System;
+using Game.States;
 using Lobby;
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
 namespace Game
@@ -9,7 +11,14 @@ namespace Game
     public class PlayerSpawner : NetworkBehaviour
     {
         [SerializeField] private GameObject slender, human;
+        private NetworkVariable<int> _playersAlive;
         private bool _loaded;
+
+        private void Awake()
+        {
+            _playersAlive = new NetworkVariable<int>();
+            _playersAlive.OnValueChanged += (value, newValue) => { print(newValue); };
+        }
 
         [ServerRpc(RequireOwnership = false)]
         public void SpawnServerRpc(ServerRpcParams rpcParams = default)
@@ -26,18 +35,27 @@ namespace Game
                     break;
                 case Teams.Human:
                     instance = Instantiate(human, position, Quaternion.identity);
+                    _playersAlive.Value++;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(team), team, null);
             }
 
-
-            //TODO: find a better way
-            //I can make a class, which resolves all dependencies and then inject/grab them from it
             instance.GetComponent<NetworkObject>().SpawnAsPlayerObject(id, true);
         }
 
-        //NetworkManager.Singleton.PrefabHandler
-        //NetworkManager.Singleton.PrefabHandler.AddHandler()
+        //TODO: create a class, that will track player count and change game state
+        [ServerRpc(RequireOwnership = false)]
+        public void DeSpawnServerRpc(ulong id)
+        {
+            var player = NetworkManager.Singleton.SpawnManager.SpawnedObjects[id];
+            player.Despawn(true);
+            _playersAlive.Value--;
+
+            if (_playersAlive.Value == 0)
+            {
+                StateManager.Instance.ChangeState(StateManager.States.EndGame);
+            }
+        }
     }
 }

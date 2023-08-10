@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Unity.Netcode;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace Game.States
@@ -76,6 +77,14 @@ namespace Game.States
         private void EndGame()
         {
             print("ENDGAME");
+            EndGameClientRpc();
+            Application.Quit();
+        }
+
+        [ClientRpc]
+        private void EndGameClientRpc()
+        {
+            Application.Quit();
         }
 
         public override void OnDestroy()
