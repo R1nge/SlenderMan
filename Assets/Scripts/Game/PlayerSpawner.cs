@@ -11,13 +11,14 @@ namespace Game
     public class PlayerSpawner : NetworkBehaviour
     {
         [SerializeField] private GameObject slender, human;
-        private NetworkVariable<int> _playersAlive;
+        private NetworkVariable<int> _humansAlive, _slendersAlive;
         private bool _loaded;
 
         private void Awake()
         {
-            _playersAlive = new NetworkVariable<int>();
-            _playersAlive.OnValueChanged += (value, newValue) => { print(newValue); };
+            _humansAlive = new NetworkVariable<int>();
+            _slendersAlive = new NetworkVariable<int>();
+            _humansAlive.OnValueChanged += (value, newValue) => { print(newValue); };
         }
 
         [ServerRpc(RequireOwnership = false)]
@@ -32,10 +33,11 @@ namespace Game
             {
                 case Teams.Slender:
                     instance = Instantiate(slender, position, Quaternion.identity);
+                    _slendersAlive.Value++;
                     break;
                 case Teams.Human:
                     instance = Instantiate(human, position, Quaternion.identity);
-                    _playersAlive.Value++;
+                    _humansAlive.Value++;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(team), team, null);
@@ -50,9 +52,20 @@ namespace Game
         {
             var player = NetworkManager.Singleton.SpawnManager.SpawnedObjects[id];
             player.Despawn(true);
-            _playersAlive.Value--;
 
-            if (_playersAlive.Value == 0)
+            switch (Lobby.Lobby.Instance.GetData(id).Team)
+            {
+                case Teams.Slender:
+                    _slendersAlive.Value--;
+                    break;
+                case Teams.Human:
+                    _humansAlive.Value--;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+            
+            if (_humansAlive.Value == 0 || _slendersAlive.Value == 0)
             {
                 StateManager.Instance.ChangeState(StateManager.States.EndGame);
             }
