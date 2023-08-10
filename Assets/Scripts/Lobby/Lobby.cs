@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Lobby
@@ -23,6 +24,21 @@ namespace Lobby
 
 
         public int GetPlayerCount() => _lobbyData.Count;
+
+        public ulong GetSlenderId()
+        {
+            foreach (var pair in _lobbyData)
+            {
+                if (pair.Value.Team == Teams.Slender)
+                {
+                    return pair.Value.Id;
+                }
+            }
+            
+            Debug.LogError("Slender ID not found", this);
+
+            return 0;
+        }
 
         public void SelectSlender(string name, ulong id)
         {
