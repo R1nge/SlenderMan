@@ -8,10 +8,12 @@ namespace Game.States
     public class GameEntryPoint : NetworkBehaviour
     {
         private PlayerSpawner _playerSpawner;
+        private NotesManager _notesManager;
 
         private void Awake()
         {
             _playerSpawner = FindObjectOfType<PlayerSpawner>();
+            _notesManager = FindObjectOfType<NotesManager>();
             NetworkManager.Singleton.SceneManager.OnLoadEventCompleted += OnMapLoaded;
         }
 
@@ -50,7 +52,11 @@ namespace Game.States
         private void Warmup()
         {
             _playerSpawner.SpawnServerRpc();
-            NotesManager.Instance.SpawnNotes();
+            if (IsServer)
+            {
+                _notesManager.SpawnNotes();
+            }
+            
             print("WARMUP");
         }
 

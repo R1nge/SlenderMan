@@ -1,5 +1,4 @@
-﻿using System;
-using Unity.Netcode;
+﻿using Unity.Netcode;
 using UnityEngine;
 
 namespace Game
@@ -9,19 +8,13 @@ namespace Game
         [SerializeField] private Note note;
         [SerializeField] private int notesAmount;
         [SerializeField] private Transform[] spawnPositions;
-        public static NotesManager Instance { get; private set; }
+        private NetworkVariable<int> _collectedAmount;
 
         private void Awake()
         {
-            if (Instance != null)
-            {
-                throw new Exception("Multiple NotesManagers defined!");
-            }
-
-            DontDestroyOnLoad(gameObject);
-            Instance = this;
+            _collectedAmount = new NetworkVariable<int>();
         }
-
+        
         public void SpawnNotes()
         {
             int spawnAmount;
@@ -33,12 +26,18 @@ namespace Game
             {
                 spawnAmount = notesAmount;
             }
-
+            
             for (int i = 0; i < spawnAmount; i++)
             {
                 var instance = Instantiate(note, spawnPositions[i].position, Quaternion.identity);
                 instance.GetComponent<NetworkObject>().Spawn(true);
             }
+        }
+        
+        public void Collect()
+        {
+            _collectedAmount.Value++;
+            print($"Note collected; Only {notesAmount - _collectedAmount.Value} notes left");
         }
     }
 }
