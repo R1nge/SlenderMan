@@ -9,6 +9,7 @@ namespace Characters.Human
         [SerializeField] private MeshRenderer mesh;
         [SerializeField] private Gradient gradient;
         private HumanHealthView _humanHealth;
+        private ulong _slender;
 
         private void Awake()
         {
@@ -19,44 +20,47 @@ namespace Characters.Human
         private void Start()
         {
             GetSlenderIdServerRpc();
+
+            var rpc = new ClientRpcParams
+            {
+                Send = new ClientRpcSendParams
+                {
+                    TargetClientIds = new[]
+                    {
+                        _slender
+                    }
+                }
+            };
+
+            var val = (float)_humanHealth.CurrentHealth.Value / _humanHealth.MaxHealth.Value;
+
+            UpdateColorClientRpc(val, rpc);
         }
 
         [ServerRpc(RequireOwnership = false)]
         private void GetSlenderIdServerRpc()
         {
             var slender = Lobby.Lobby.Instance.GetSlenderId();
-
-            var rpc = new ClientRpcParams
-            {
-                Send = new ClientRpcSendParams
-                {
-                    TargetClientIds = new[]
-                    {
-                        slender
-                    }
-                }
-            };
-
-            SetSlenderIdClientRpc(rpc);
+            _slender = slender;
+            GetSlenderIdClientRpc(slender);
         }
 
         [ClientRpc]
-        private void SetSlenderIdClientRpc(ClientRpcParams rpcParams)
+        private void GetSlenderIdClientRpc(ulong slender)
         {
-            mesh.material.color = gradient.Evaluate(1);
+            if (IsServer) return;
+            _slender = slender;
         }
 
         private void OnValueChanged(int _, int value)
         {
-            var slender = Lobby.Lobby.Instance.GetSlenderId();
-
             var rpc = new ClientRpcParams
             {
                 Send = new ClientRpcSendParams
                 {
                     TargetClientIds = new[]
                     {
-                        slender
+                        _slender
                     }
                 }
             };

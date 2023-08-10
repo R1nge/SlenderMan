@@ -44,7 +44,7 @@ namespace Characters.Slender
                     continue;       
                 }
 
-                if (lobby.GetData((ulong)i).Id == 0)
+                if (IsServer)
                 {
                     mesh.enabled = _isVisible;
                     return;
