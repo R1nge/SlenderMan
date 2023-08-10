@@ -1,11 +1,26 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Lobby
 {
-    public class Lobby
+    public class Lobby : MonoBehaviour
     {
         private Dictionary<ulong, LobbyData> _lobbyData = new();
+
+        public static Lobby Instance { get; private set; }
+
+        private void Awake()
+        {
+            if (Instance != null)
+            {
+                throw new Exception("Multiple Lobbies defined!");
+            }
+
+            DontDestroyOnLoad(gameObject);
+            Instance = this;
+        }
+
 
         public int GetPlayerCount() => _lobbyData.Count;
 

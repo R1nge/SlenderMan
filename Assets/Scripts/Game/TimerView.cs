@@ -2,7 +2,6 @@
 using Game.States;
 using Unity.Netcode;
 using UnityEngine;
-using VContainer;
 
 namespace Game
 {
@@ -10,15 +9,8 @@ namespace Game
     {
         [SerializeField] private int timeBeforeStart;
         private NetworkVariable<int> _currentTime;
-        private StateManager _stateManager;
 
         public NetworkVariable<int> CurrentTime => _currentTime;
-
-        [Inject]
-        private void Construct(StateManager stateManager)
-        {
-            _stateManager = stateManager;
-        }
 
         private void Awake()
         {
@@ -41,11 +33,25 @@ namespace Game
 
             if (_currentTime.Value == 0)
             {
-                _stateManager.ChangeState(StateManager.States.Game);
+                ChangeState();
                 yield break;
             }
 
             StartCoroutine(Timer());
+        }
+
+        private void ChangeState()
+        {
+            StateManager.Instance.ChangeState(StateManager.States.Game);
+            ChangeStateClientRpc();
+            print("Changed state SERVER");
+        }
+
+        [ClientRpc]
+        private void ChangeStateClientRpc()
+        {
+            StateManager.Instance.ChangeState(StateManager.States.Game);
+            print("Changed state CLIENT");
         }
     }
 }

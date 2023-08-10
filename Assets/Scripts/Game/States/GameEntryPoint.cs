@@ -2,36 +2,28 @@
 using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine.SceneManagement;
-using VContainer;
 
 namespace Game.States
 {
     public class GameEntryPoint : NetworkBehaviour
     {
-        private StateManager _stateManager;
         private PlayerSpawner _playerSpawner;
-
-        [Inject]
-        private void Construct(StateManager stateManager, PlayerSpawner playerSpawner)
-        {
-            _stateManager = stateManager;
-            _playerSpawner = playerSpawner;
-        }
 
         private void Awake()
         {
+            _playerSpawner = FindObjectOfType<PlayerSpawner>();
             NetworkManager.Singleton.SceneManager.OnLoadEventCompleted += OnMapLoaded;
         }
 
         private void OnMapLoaded(string _, LoadSceneMode __, List<ulong> loaded, List<ulong> ____)
         {
-            _stateManager.ChangeState(StateManager.States.Warmup);
+            StateManager.Instance.ChangeState(StateManager.States.Warmup);
         }
 
         private void Start()
         {
-            _stateManager.OnStateChanged += StateChanged;
-            if (_stateManager.CurrentState == StateManager.States.Warmup)
+            StateManager.Instance.OnStateChanged += StateChanged;
+            if (StateManager.Instance.CurrentState == StateManager.States.Warmup)
             {
                 Warmup();
             }
@@ -63,16 +55,18 @@ namespace Game.States
 
         private void StartGame()
         {
+            print("GAME");
         }
 
         private void EndGame()
         {
+            print("ENDGAME");
         }
 
         public override void OnDestroy()
         {
             base.OnDestroy();
-            _stateManager.OnStateChanged -= StateChanged;
+            StateManager.Instance.OnStateChanged -= StateChanged;
         }
     }
 }

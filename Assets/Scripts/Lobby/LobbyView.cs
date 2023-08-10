@@ -2,7 +2,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using VContainer;
 
 namespace Lobby
 {
@@ -10,13 +9,6 @@ namespace Lobby
     {
         [SerializeField] private Button start;
         [SerializeField] private Button slender, human;
-        private Lobby _lobby;
-
-        [Inject]
-        private void Construct(Lobby lobby)
-        {
-            _lobby = lobby;
-        }
 
         private void Awake()
         {
@@ -43,7 +35,7 @@ namespace Lobby
         private void SelectHumanServerRpc(ServerRpcParams rpcParams = default)
         {
             var id = rpcParams.Receive.SenderClientId;
-            _lobby.SelectHuman($"Name {id}", id);
+            Lobby.Instance.SelectHuman($"Name {id}", id);
         }
 
         private void SelectSlender()
@@ -55,7 +47,7 @@ namespace Lobby
         private void SelectSlenderServerRpc(ServerRpcParams rpcParams = default)
         {
             var id = rpcParams.Receive.SenderClientId;
-            _lobby.SelectSlender($"Name {id}", id);
+            Lobby.Instance.SelectSlender($"Name {id}", id);
         }
 
         private void StartGame()

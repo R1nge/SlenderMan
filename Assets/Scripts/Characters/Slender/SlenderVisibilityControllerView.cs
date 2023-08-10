@@ -5,13 +5,7 @@ namespace Characters.Slender
 {
     public class SlenderVisibilityControllerView : NetworkBehaviour
     {
-        private Lobby.Lobby _lobby;
         private bool _isVisible;
-
-        public void Construct(Lobby.Lobby lobby)
-        {
-            _lobby = lobby;
-        }
 
         private void Start()
         {
@@ -36,21 +30,23 @@ namespace Characters.Slender
         private void ChangeVisibilityServerRpc()
         {
             _isVisible = !_isVisible;
+
+            var lobby = Lobby.Lobby.Instance;
             
-            for (int i = 0; i < _lobby.GetPlayerCount(); i++)
+            for (int i = 0; i < lobby.GetPlayerCount(); i++)
             {
-                if (NetworkObject.OwnerClientId == _lobby.GetData((ulong)i).Id)
+                if (NetworkObject.OwnerClientId == lobby.GetData((ulong)i).Id)
                 {
                     continue;       
                 }
                 
                 if (_isVisible)
                 {
-                    NetworkObject.NetworkHide(_lobby.GetData((ulong)i).Id);
+                    NetworkObject.NetworkHide(lobby.GetData((ulong)i).Id);
                 }
                 else
                 {
-                    NetworkObject.NetworkShow(_lobby.GetData((ulong)i).Id);
+                    NetworkObject.NetworkShow(lobby.GetData((ulong)i).Id);
                 }
             }
         }
