@@ -5,8 +5,9 @@ using UnityEngine;
 
 public class SetLayer : NetworkBehaviour
 {
-    private void Awake()
+    private void Start()
     {
+        if (!IsOwner) return;
         StateManager.Instance.OnStateChanged += OnGameStarted;
     }
 
@@ -17,7 +18,7 @@ public class SetLayer : NetworkBehaviour
             var players = FindObjectsByType<HumanMovementView>(FindObjectsInactive.Include, FindObjectsSortMode.None);
             foreach (var player in players)
             {
-                player.gameObject.layer = LayerMask.NameToLayer("Human");
+                player.gameObject.layer = LayerMask.NameToLayer("HumanWallHack");
             }
         }
     }

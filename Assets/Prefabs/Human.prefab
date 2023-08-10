@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7259087390195198451}
   - component: {fileID: 6732331040880295745}
   - component: {fileID: 110702050911663195}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Spot Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -130,7 +130,7 @@ GameObject:
   - component: {fileID: 545246850703540131}
   - component: {fileID: 121682910647716335}
   - component: {fileID: 4462213652993456147}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -275,7 +275,7 @@ GameObject:
   - component: {fileID: -5812672665701414206}
   - component: {fileID: -3798895113220567013}
   - component: {fileID: 40561499328644557}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Human
   m_TagString: Untagged
   m_Icon: {fileID: 0}

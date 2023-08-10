@@ -71,26 +71,10 @@ namespace Game.States
         private void StartGame()
         {
             print("GAME");
-            //StartGameClientRpc();
-        }
-
-        [ClientRpc]
-        private void StartGameClientRpc()
-        {
-            if (IsServer) return;
-            print("GAME");
         }
 
         private void EndGame()
         {
-            print("ENDGAME");
-            //EndGameClientRpc();
-        }
-
-        [ClientRpc]
-        private void EndGameClientRpc()
-        {
-            if (IsServer) return;
             print("ENDGAME");
         }
 
