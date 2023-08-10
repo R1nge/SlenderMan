@@ -24,19 +24,12 @@ namespace Characters.Human
         private void CheckForSlender()
         {
             var ray = new Ray(playerCamera.position, playerCamera.forward);
-            if (Physics.Raycast(ray, out var hit, distance, ~ignore))
-            {
-                if (hit.transform.TryGetComponent(out SlenderMovementView _))
-                {
-                    if (hit.transform.TryGetComponent(out NetworkObject networkObject))
-                    {
-                        if (networkObject.IsNetworkVisibleTo(NetworkObject.OwnerClientId))
-                        {
-                            _humanHealthView.ReduceServerRpc(1);
-                        }
-                    }
-                }
-            }
+            if (!Physics.Raycast(ray, out var hit, distance, ~ignore)) return;
+            if (!hit.transform.TryGetComponent(out NetworkObject networkObject)) return;
+            if (!networkObject.IsNetworkVisibleTo(NetworkObject.OwnerClientId)) return;
+            if (!networkObject.TryGetComponent(out SlenderVisibilityControllerView visibility)) return;
+            if (!visibility.IsVisible()) return;
+            _humanHealthView.ReduceServerRpc(1);
         }
     }
 }

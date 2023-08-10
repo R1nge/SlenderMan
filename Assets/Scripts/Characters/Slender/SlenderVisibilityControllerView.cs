@@ -5,10 +5,14 @@ namespace Characters.Slender
 {
     public class SlenderVisibilityControllerView : NetworkBehaviour
     {
+        [SerializeField] private MeshRenderer mesh;
         private bool _isVisible;
+
+        public bool IsVisible() => _isVisible;
 
         private void Start()
         {
+            _isVisible = mesh.enabled || NetworkObject.IsNetworkVisibleTo(NetworkObject.OwnerClientId);
             if (NetworkObject.IsOwner)
             {
                 ChangeVisibilityServerRpc();
@@ -38,6 +42,12 @@ namespace Characters.Slender
                 if (NetworkObject.OwnerClientId == lobby.GetData((ulong)i).Id)
                 {
                     continue;       
+                }
+
+                if (lobby.GetData((ulong)i).Id == 0)
+                {
+                    mesh.enabled = _isVisible;
+                    return;
                 }
                 
                 if (_isVisible)
