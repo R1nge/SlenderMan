@@ -5,13 +5,15 @@ namespace Characters.Human
     public class HumanMovement
     {
         private readonly CharacterController _characterController;
+        private readonly HumanAnimationController _animator;
         private Vector3 _moveDirection = Vector3.zero;
         private float _walkingSpeed, _runningSpeed;
         private float _gravity;
 
-        public HumanMovement(CharacterController characterController)
+        public HumanMovement(CharacterController characterController, HumanAnimationController animator)
         {
             _characterController = characterController;
+            _animator = animator;
         }
 
         public void SetWalkingSpeed(float speed)
@@ -38,6 +40,7 @@ namespace Characters.Human
             float curSpeedY = (run ? _runningSpeed : _walkingSpeed) * Input.GetAxis("Horizontal");
             _moveDirection = forward * curSpeedX + right * curSpeedY;
 
+            _animator.SetSpeed(curSpeedX + curSpeedY);
 
             if (!_characterController.isGrounded)
             {

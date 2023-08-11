@@ -10,12 +10,14 @@ namespace Characters.Human
         [SerializeField] private float runningSpeed = 11.5f;
         [SerializeField] private float gravity = 20f;
         private CharacterController _characterController;
+        private HumanAnimationController _animator;
         private HumanMovement _humanMovement;
 
         private void Awake()
         {
             _characterController = GetComponent<CharacterController>();
-            _humanMovement = new HumanMovement(_characterController);
+            _animator = GetComponent<HumanAnimationController>();
+            _humanMovement = new HumanMovement(_characterController, _animator);
             _humanMovement.SetWalkingSpeed(walkingSpeed);
             _humanMovement.SetRunningSpeed(runningSpeed);
             _humanMovement.SetGravity(gravity);

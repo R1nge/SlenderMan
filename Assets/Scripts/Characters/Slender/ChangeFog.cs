@@ -10,10 +10,9 @@ namespace Characters.Slender
 
         private void Start()
         {
-            print($"Is local {IsOwner && IsLocalPlayer && NetworkObject.IsOwner && NetworkObject.IsLocalPlayer}");
             if (!IsOwner && !IsLocalPlayer && !NetworkObject.IsOwner && !NetworkObject.IsLocalPlayer) return;
             _volume = FindObjectOfType<Volume>();
-            //_volume.enabled = false;
+
             var vol = _volume.profile;
             
             if (vol.TryGet(out FullScreenFog fog))

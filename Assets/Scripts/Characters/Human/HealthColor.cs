@@ -6,7 +6,7 @@ namespace Characters.Human
 {
     public class HealthColor : NetworkBehaviour
     {
-        [SerializeField] private MeshRenderer mesh;
+        [SerializeField] private Renderer mesh;
         [SerializeField] private Gradient gradient;
         private HumanHealthView _humanHealth;
         private ulong _slender;
