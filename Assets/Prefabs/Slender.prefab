@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: -7162138618484502605}
   - component: {fileID: -4682441334720666744}
   - component: {fileID: 8433960669754768498}
+  - component: {fileID: 5171735914221749524}
   m_Layer: 7
   m_Name: Slender
   m_TagString: Untagged
@@ -245,6 +246,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e685027de1f640ab9e7cd16c7a9e86ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5171735914221749524
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3959837538732354524}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 660e17f5923a4cb998770ccb64ccaeb4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   mesh: {fileID: 4927228017414958267}
 --- !u!1 &7509674815603653897
 GameObject:
@@ -289,8 +302,8 @@ Camera:
   m_GameObject: {fileID: 7509674815603653897}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0

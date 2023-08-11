@@ -18,7 +18,7 @@ namespace Game
         {
             _humansAlive = new NetworkVariable<int>();
             _slendersAlive = new NetworkVariable<int>();
-            _humansAlive.OnValueChanged += (value, newValue) => { print(newValue); };
+            _humansAlive.OnValueChanged += (_, newValue) => { print($"Humans alive: {newValue}"); };
         }
 
         [ServerRpc(RequireOwnership = false)]
@@ -48,26 +48,28 @@ namespace Game
 
         //TODO: create a class, that will track player count and change game state
         [ServerRpc(RequireOwnership = false)]
-        public void DeSpawnServerRpc(ulong id)
+        public void DeSpawnServerRpc(NetworkObjectReference player)
         {
-            var player = NetworkManager.Singleton.SpawnManager.SpawnedObjects[id];
-            player.Despawn(true);
+            if (player.TryGet(out NetworkObject networkObject))
+            {
+                networkObject.Despawn(true);
 
-            switch (Lobby.Lobby.Instance.GetData(id).Team)
-            {
-                case Teams.Slender:
-                    _slendersAlive.Value--;
-                    break;
-                case Teams.Human:
-                    _humansAlive.Value--;
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-            
-            if (_humansAlive.Value == 0 || _slendersAlive.Value == 0)
-            {
-                StateManager.Instance.ChangeState(StateManager.States.EndGame);
+                switch (Lobby.Lobby.Instance.GetData(networkObject.OwnerClientId).Team)
+                {
+                    case Teams.Slender:
+                        _slendersAlive.Value--;
+                        break;
+                    case Teams.Human:
+                        _humansAlive.Value--;
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+
+                if (_humansAlive.Value == 0 || _slendersAlive.Value == 0)
+                {
+                    StateManager.Instance.ChangeState(StateManager.States.EndGame);
+                }
             }
         }
     }

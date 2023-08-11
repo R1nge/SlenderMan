@@ -66,7 +66,7 @@ namespace Characters.Human
         {
             _isDead.Value = true;
             Debug.LogError("Player has died", this);
-            _playerSpawner.DeSpawnServerRpc(NetworkObject.NetworkObjectId);
+            _playerSpawner.DeSpawnServerRpc(NetworkObject);
         }
     }
 }

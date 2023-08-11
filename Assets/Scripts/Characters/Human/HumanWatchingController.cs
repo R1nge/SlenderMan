@@ -28,7 +28,7 @@ namespace Characters.Human
             if (!hit.transform.TryGetComponent(out NetworkObject networkObject)) return;
             if (!networkObject.IsNetworkVisibleTo(NetworkObject.OwnerClientId)) return;
             if (!networkObject.TryGetComponent(out SlenderVisibilityControllerView visibility)) return;
-            if (!visibility.IsVisible()) return;
+            if (!visibility.IsVisible().Value) return;
             _humanHealthView.ReduceServerRpc(1);
         }
     }

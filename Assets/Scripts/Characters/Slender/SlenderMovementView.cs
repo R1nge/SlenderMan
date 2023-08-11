@@ -9,9 +9,9 @@ namespace Characters.Slender
         [SerializeField] private float visibleSpeed = 5f;
         [SerializeField] private float invisibleSpeed = 14f;
         [SerializeField] private float gravity = 20f;
-        private bool _visible = true;
         private CharacterController _characterController;
         private SlenderMovement _slenderMovement;
+        private SlenderVisibilityControllerView _slenderVisibility;
 
         private void Awake()
         {
@@ -20,18 +20,15 @@ namespace Characters.Slender
             _slenderMovement.SetVisibleSpeed(visibleSpeed);
             _slenderMovement.SetInvisibleSpeed(invisibleSpeed);
             _slenderMovement.SetGravity(gravity);
+            _slenderVisibility = GetComponent<SlenderVisibilityControllerView>();
         }
+        
 
         private void Update()
         {
             if (IsOwner)
             {
-                if (Input.GetKeyDown(KeyCode.V))
-                {
-                    _visible = !_visible;
-                }
-
-                _slenderMovement.Move(transform, _visible);
+                _slenderMovement.Move(transform, _slenderVisibility.IsVisible().Value);
             }
         }
     }

@@ -34,8 +34,8 @@ namespace Characters.Slender
             Vector3 forward = player.TransformDirection(Vector3.forward);
             Vector3 right = player.TransformDirection(Vector3.right);
 
-            float curSpeedX = (visible ? _invisibleSpeed : _visibleSpeed) * Input.GetAxis("Vertical");
-            float curSpeedY = (visible ? _invisibleSpeed : _visibleSpeed) * Input.GetAxis("Horizontal");
+            float curSpeedX = (visible ? _visibleSpeed : _invisibleSpeed) * Input.GetAxis("Vertical");
+            float curSpeedY = (visible ? _visibleSpeed : _invisibleSpeed) * Input.GetAxis("Horizontal");
             _moveDirection = forward * curSpeedX + right * curSpeedY;
 
 
