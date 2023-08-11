@@ -10,11 +10,16 @@ namespace Game
         [SerializeField] private Note note;
         [SerializeField] private int notesAmount;
         [SerializeField] private Transform[] spawnPositions;
-        private int _spawnedAmount;
+        private NetworkVariable<int> _spawnedAmount;
         private NetworkVariable<int> _collectedAmount;
+
+        public NetworkVariable<int> CollectedAmount() => _collectedAmount;
+
+        public int TotalAmount() => _spawnedAmount.Value;
 
         private void Awake()
         {
+            _spawnedAmount = new NetworkVariable<int>();
             _collectedAmount = new NetworkVariable<int>();
         }
 
@@ -22,14 +27,14 @@ namespace Game
         {
             if (notesAmount > spawnPositions.Length)
             {
-                _spawnedAmount = spawnPositions.Length;
+                _spawnedAmount.Value = spawnPositions.Length;
             }
             else
             {
-                _spawnedAmount = notesAmount;
+                _spawnedAmount.Value = notesAmount;
             }
 
-            for (int i = 0; i < _spawnedAmount; i++)
+            for (int i = 0; i < _spawnedAmount.Value; i++)
             {
                 var instance = Instantiate(note, spawnPositions[i].position, Quaternion.identity);
                 instance.GetComponent<NetworkObject>().Spawn(true);
@@ -39,8 +44,7 @@ namespace Game
         public void Collect()
         {
             _collectedAmount.Value++;
-            print($"Note collected; Only {_spawnedAmount - _collectedAmount.Value} notes left");
-            if (_collectedAmount.Value == _spawnedAmount)
+            if (_collectedAmount.Value == _spawnedAmount.Value)
             {
                 OnAllNotesCollected?.Invoke();
                 OnAllNotesCollectedClientRpc();

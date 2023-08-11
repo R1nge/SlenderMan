@@ -6,7 +6,6 @@ namespace Characters.Human.UI
 {
     public class HealthUI : NetworkBehaviour
     {
-        [SerializeField] private GameObject healthCanvas;
         [SerializeField] private TextMeshProUGUI healthText;
         private HumanHealthView _humanHealth;
 
@@ -17,7 +16,7 @@ namespace Characters.Human.UI
 
         private void Start()
         {
-            healthCanvas.gameObject.SetActive(IsOwner);
+            healthText.gameObject.SetActive(IsOwner);
             if (!IsOwner) return;
             _humanHealth.CurrentHealth.OnValueChanged += HealthChanged;
             HealthChanged(0, _humanHealth.CurrentHealth.Value);
