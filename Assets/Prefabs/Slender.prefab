@@ -20,6 +20,7 @@ GameObject:
   - component: {fileID: -4682441334720666744}
   - component: {fileID: 8433960669754768498}
   - component: {fileID: 5171735914221749524}
+  - component: {fileID: 8040642943704327377}
   m_Layer: 7
   m_Name: Slender
   m_TagString: Untagged
@@ -219,7 +220,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a31935e861d84031924b27b2892fb02b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  visibleSpeed: 5
   invisibleSpeed: 14
   gravity: 20
 --- !u!114 &-4682441334720666744
@@ -259,6 +259,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mesh: {fileID: 4927228017414958267}
+--- !u!114 &8040642943704327377
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3959837538732354524}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e3b99abfc084564b1fe83974cd61c48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7509674815603653897
 GameObject:
   m_ObjectHideFlags: 0
