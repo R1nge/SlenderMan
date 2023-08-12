@@ -32,8 +32,8 @@ MonoBehaviour:
     m_OverrideState: 0
     m_Value: 10
   startHeight:
-    m_OverrideState: 0
-    m_Value: 5
+    m_OverrideState: 1
+    m_Value: 11.33
   endHeight:
     m_OverrideState: 0
     m_Value: 0
@@ -42,7 +42,7 @@ MonoBehaviour:
     m_Value: 1
   noiseMode:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 1
   noiseTexture:
     m_OverrideState: 0
     m_Value: {fileID: 0}

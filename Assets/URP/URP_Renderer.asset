@@ -26,7 +26,7 @@ MonoBehaviour:
     overrideMaterialPassIndex: 0
     overrideShader: {fileID: 0}
     overrideShaderPassIndex: 0
-    overrideMode: 1
+    overrideMode: 0
     overrideDepthState: 1
     depthCompareFunction: 5
     enableWrite: 1
@@ -113,5 +113,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Active: 1
   _injectionPoint: 550
-  _renderCamera: 3
+  _renderCamera: 1
   _shader: {fileID: -6465566751694194690, guid: a1b07ed697d67f145899e797afa7e6d3, type: 3}

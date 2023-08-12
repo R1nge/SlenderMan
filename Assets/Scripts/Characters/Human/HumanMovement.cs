@@ -40,7 +40,7 @@ namespace Characters.Human
             float curSpeedY = (run ? _runningSpeed : _walkingSpeed) * Input.GetAxis("Horizontal");
             _moveDirection = forward * curSpeedX + right * curSpeedY;
 
-            var speed = Mathf.Abs(curSpeedX) + Mathf.Abs(curSpeedY) / _runningSpeed;
+            var speed = (Mathf.Abs(curSpeedX) + Mathf.Abs(curSpeedY)) / _runningSpeed;
             speed = Mathf.Clamp01(speed);
             _animator.SetSpeed(speed);
             _animator.SetDirection(new Vector2(Input.GetAxis("Vertical"), Input.GetAxis("Horizontal")));
