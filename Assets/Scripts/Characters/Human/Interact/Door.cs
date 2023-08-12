@@ -1,11 +1,12 @@
 ﻿using Unity.Netcode;
+using Unity.Netcode.Components;
 using UnityEngine;
 
 namespace Characters.Human.Interact
 {
-    public class Door : MonoBehaviour, IIntractable
+    public class Door : NetworkBehaviour, IIntractable
     {
-        [SerializeField] private Animator animator;
+        [SerializeField] private NetworkAnimator animator;
         private bool _open;
         private static readonly int Open = Animator.StringToHash("Open");
 
@@ -19,7 +20,7 @@ namespace Characters.Human.Interact
         private void InteractServerRpc()
         {
             _open = !_open;
-            animator.SetBool(Open, _open);
+            animator.Animator.SetBool(Open, _open);
         }
     }
 }

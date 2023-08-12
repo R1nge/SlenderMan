@@ -3122,6 +3122,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 543450652051603305}
+  - component: {fileID: 919132147590964692}
   m_Layer: 0
   m_Name: toilet
   m_TagString: Untagged
@@ -3129,6 +3130,26 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &919132147590964692
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919132147590964691}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 737163600
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 1
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
 --- !u!1 &955796017936974544
 GameObject:
   m_ObjectHideFlags: 0
@@ -3144,6 +3165,7 @@ GameObject:
   - component: {fileID: 8618290875489623275}
   - component: {fileID: 8618290875489623274}
   - component: {fileID: 8618290875489623273}
+  - component: {fileID: 8618290875489623276}
   m_Layer: 0
   m_Name: Door
   m_TagString: Untagged
@@ -5878,7 +5900,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57f2fa422ab046e38885777952f2d14a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 8618290875489623275}
+  animator: {fileID: 8618290875489623274}
 --- !u!114 &8618290875489623274
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5914,6 +5936,26 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &8618290875489623276
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 955796017936974544}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 4154333693
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 1
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
 --- !u!1001 &8623255322397229048
 PrefabInstance:
   m_ObjectHideFlags: 0
