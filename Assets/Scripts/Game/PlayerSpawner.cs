@@ -1,25 +1,16 @@
 ﻿using System;
-using Game.States;
 using Lobby;
 using Unity.Netcode;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
 namespace Game
 {
     public class PlayerSpawner : NetworkBehaviour
     {
+        public event Action<Teams, GameObject, ulong> OnPlayerSpawned, OnPlayerDied;
         [SerializeField] private GameObject slender, human;
-        private NetworkVariable<int> _humansAlive, _slendersAlive;
         private bool _loaded;
-
-        private void Awake()
-        {
-            _humansAlive = new NetworkVariable<int>();
-            _slendersAlive = new NetworkVariable<int>();
-            _humansAlive.OnValueChanged += (_, newValue) => { print($"Humans alive: {newValue}"); };
-        }
 
         [ServerRpc(RequireOwnership = false)]
         public void SpawnServerRpc(ServerRpcParams rpcParams = default)
@@ -33,43 +24,25 @@ namespace Game
             {
                 case Teams.Slender:
                     instance = Instantiate(slender, position, Quaternion.identity);
-                    _slendersAlive.Value++;
                     break;
                 case Teams.Human:
                     instance = Instantiate(human, position, Quaternion.identity);
-                    _humansAlive.Value++;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(team), team, null);
             }
 
             instance.GetComponent<NetworkObject>().SpawnAsPlayerObject(id, true);
+            OnPlayerSpawned?.Invoke(team, instance, id);
         }
 
-        //TODO: create a class, that will track player count and change game state
-        [ServerRpc(RequireOwnership = false)]
-        public void DeSpawnServerRpc(NetworkObjectReference player)
+        public void DeSpawn(NetworkObjectReference player, ulong id)
         {
+            var team = Lobby.Lobby.Instance.GetData(id).Team;
             if (player.TryGet(out NetworkObject networkObject))
             {
+                OnPlayerDied?.Invoke(team, networkObject.gameObject, id);
                 networkObject.Despawn(true);
-
-                switch (Lobby.Lobby.Instance.GetData(networkObject.OwnerClientId).Team)
-                {
-                    case Teams.Slender:
-                        _slendersAlive.Value--;
-                        break;
-                    case Teams.Human:
-                        _humansAlive.Value--;
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException();
-                }
-
-                if (_humansAlive.Value == 0 || _slendersAlive.Value == 0)
-                {
-                    StateManager.Instance.ChangeState(StateManager.States.EndGame);
-                }
             }
         }
     }

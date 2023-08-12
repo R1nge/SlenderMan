@@ -29,7 +29,7 @@ namespace Characters.Human
             if (!networkObject.IsNetworkVisibleTo(NetworkObject.OwnerClientId)) return;
             if (!networkObject.TryGetComponent(out SlenderVisibilityControllerView visibility)) return;
             if (!visibility.IsVisible().Value) return;
-            _humanHealthView.ReduceServerRpc(1);
+            _humanHealthView.ReduceServerRpc(1, NetworkObject.OwnerClientId);
         }
     }
 }

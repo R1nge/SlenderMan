@@ -39,7 +39,7 @@ namespace Characters.Human
         }
 
         [ServerRpc(RequireOwnership = false)]
-        public void ReduceServerRpc(int amount)
+        public void ReduceServerRpc(int amount, ulong ownerId)
         {
             if (_isDead.Value)
             {
@@ -57,16 +57,15 @@ namespace Characters.Human
 
             if (currentHealth.Value == 0)
             {
-                DieServerRpc();
+                Die(ownerId);
             }
         }
 
-        [ServerRpc(RequireOwnership = false)]
-        private void DieServerRpc()
+        private void Die(ulong id)
         {
             _isDead.Value = true;
             Debug.LogError("Player has died", this);
-            _playerSpawner.DeSpawnServerRpc(NetworkObject);
+            _playerSpawner.DeSpawn(NetworkObject, id);
         }
     }
 }
