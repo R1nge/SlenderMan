@@ -36,7 +36,7 @@ namespace Lobby
             
             Debug.LogError("Slender ID not found", this);
 
-            return 0;
+            return 999999;
         }
 
         public void SelectSlender(string name, ulong id)
