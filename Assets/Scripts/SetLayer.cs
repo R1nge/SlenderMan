@@ -16,9 +16,13 @@ public class SetLayer : NetworkBehaviour
         if (state == StateManager.States.Game)
         {
             var players = FindObjectsByType<HumanMovementView>(FindObjectsInactive.Include, FindObjectsSortMode.None);
-            foreach (var player in players)
+            for (int i = 0; i < players.Length; i++)
             {
-                player.gameObject.layer = LayerMask.NameToLayer("HumanWallHack");
+                for (int j = 0; j < players[i].GetComponentsInChildren<Transform>().Length; j++)
+                {
+                    players[i].GetComponentsInChildren<Transform>()[j].gameObject.layer =
+                        LayerMask.NameToLayer("HumanWallHack");
+                }
             }
         }
     }
