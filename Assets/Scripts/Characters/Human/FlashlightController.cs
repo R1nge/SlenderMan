@@ -6,12 +6,7 @@ namespace Characters.Human
     public class FlashlightController : NetworkBehaviour
     {
         [SerializeField] private Light light;
-        private bool _enabled;
-
-        private void Awake()
-        {
-            _enabled = true;
-        }
+        private bool _enabled = true;
 
         private void Update()
         {
