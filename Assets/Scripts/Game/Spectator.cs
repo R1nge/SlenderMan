@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Game
 {
@@ -7,18 +8,27 @@ namespace Game
         [SerializeField] private Camera camera;
         private int _index;
         private Camera[] _cameras;
-        
+
+        private void Start()
+        {
+            SwitchCamera();
+        }
+
         private void Update()
         {
             if (Input.GetMouseButtonDown(0))
             {
-                //TODO: redo
-                _cameras = FindObjectsOfType<Camera>();
-                _index = (_index + 1) % _cameras.Length;
-                camera.transform.parent = _cameras[_index].transform;
-                camera.transform.localPosition = Vector3.zero;
-                camera.transform.localRotation = Quaternion.identity;
+                SwitchCamera();
             }
+        }
+
+        private void SwitchCamera()
+        {
+            _cameras = FindObjectsOfType<Camera>();
+            _index = (_index + 1) % _cameras.Length;
+            camera.transform.parent = _cameras[_index].transform;
+            camera.transform.localPosition = Vector3.zero;
+            camera.transform.localRotation = Quaternion.identity;
         }
     }
 }

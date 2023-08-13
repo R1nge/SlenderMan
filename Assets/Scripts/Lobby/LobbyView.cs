@@ -28,26 +28,28 @@ namespace Lobby
 
         private void SelectHuman()
         {
-            SelectHumanServerRpc();
+            var name = PlayerPrefs.GetString("Name", "NN");
+            SelectHumanServerRpc(name);
         }
 
         [ServerRpc(RequireOwnership = false)]
-        private void SelectHumanServerRpc(ServerRpcParams rpcParams = default)
+        private void SelectHumanServerRpc(string name, ServerRpcParams rpcParams = default)
         {
             var id = rpcParams.Receive.SenderClientId;
-            Lobby.Instance.SelectHuman($"Name {id}", id);
+            Lobby.Instance.SelectHuman(name, id);
         }
 
         private void SelectSlender()
         {
-            SelectSlenderServerRpc();
+            var name = PlayerPrefs.GetString("Name", "NN");
+            SelectSlenderServerRpc(name);
         }
 
         [ServerRpc(RequireOwnership = false)]
-        private void SelectSlenderServerRpc(ServerRpcParams rpcParams = default)
+        private void SelectSlenderServerRpc(string name, ServerRpcParams rpcParams = default)
         {
             var id = rpcParams.Receive.SenderClientId;
-            Lobby.Instance.SelectSlender($"Name {id}", id);
+            Lobby.Instance.SelectSlender(name, id);
         }
 
         private void StartGame()
