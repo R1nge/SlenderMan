@@ -3530,6 +3530,14 @@ PrefabInstance:
       propertyPath: wall
       value: 
       objectReference: {fileID: 1326762921}
+    - target: {fileID: 3225612650811905305, guid: 94be3d9e412e2694691cc240ab7b4a80, type: 3}
+      propertyPath: source
+      value: 
+      objectReference: {fileID: 1647388393}
+    - target: {fileID: 7250779000226819135, guid: 94be3d9e412e2694691cc240ab7b4a80, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 817508003f9fa754d95f149694a8a0f8, type: 3}
     - target: {fileID: 8864308956663701698, guid: 94be3d9e412e2694691cc240ab7b4a80, type: 3}
       propertyPath: m_Name
       value: Generator
@@ -3543,6 +3551,11 @@ PrefabInstance:
       addedObject: {fileID: 1035533982}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 94be3d9e412e2694691cc240ab7b4a80, type: 3}
+--- !u!82 &1647388393 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 2490098175396836952, guid: 94be3d9e412e2694691cc240ab7b4a80, type: 3}
+  m_PrefabInstance: {fileID: 1647388392}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1647388398 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 999271131537648437, guid: 94be3d9e412e2694691cc240ab7b4a80, type: 3}
