@@ -1,9 +1,10 @@
-﻿using Unity.Netcode;
-using UnityEngine;
+﻿using Characters.Human;
+using Characters.Human.Interact;
+using Unity.Netcode;
 
 namespace Game
 {
-    public class Note : NetworkBehaviour
+    public class Note : NetworkBehaviour, IIntractable
     {
         private NotesManager _notesManager;
 
@@ -12,12 +13,7 @@ namespace Game
             _notesManager = FindObjectOfType<NotesManager>();
         }
 
-        private void OnTriggerEnter(Collider other)
-        {
-            Collect();
-        }
-        
-        private void Collect()
+        public void Interact(Inventory inventory)
         {
             if (!IsServer) return;
             _notesManager.Collect();

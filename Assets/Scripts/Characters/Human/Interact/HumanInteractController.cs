@@ -1,5 +1,6 @@
 ﻿using Characters.Human.Pickup;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Characters.Human.Interact
 {
@@ -7,23 +8,26 @@ namespace Characters.Human.Interact
     {
         [SerializeField] private float rayDistance;
         [SerializeField] private Transform camera;
+        [SerializeField] private RawImage hand;
         private Inventory _inventory;
 
         private void Awake()
         {
             _inventory = GetComponent<Inventory>();
+            hand.enabled = false;
         }
 
         private void Update()
         {
-            //TODO: show an icon, if object is interactable
             if (Input.GetKeyDown(KeyCode.E))
             {
-                Raycast();
+                Interact();
             }
+
+            Icon();
         }
 
-        private void Raycast()
+        private void Interact()
         {
             Ray ray = new Ray(camera.position, camera.forward);
             if (Physics.Raycast(ray, out var hit, rayDistance))
@@ -36,6 +40,30 @@ namespace Characters.Human.Interact
                 {
                     pickupable.Pickup(_inventory);
                 }
+            }
+        }
+
+        private void Icon()
+        {
+            Ray ray = new Ray(camera.position, camera.forward);
+            if (Physics.Raycast(ray, out var hit, rayDistance))
+            {
+                if (hit.transform.TryGetComponent(out IIntractable _))
+                {
+                    hand.enabled = true;
+                }
+                else if (hit.transform.TryGetComponent(out IPickupable _))
+                {
+                    hand.enabled = true;
+                }
+                else
+                {
+                    hand.enabled = false;
+                }
+            }
+            else
+            {
+                hand.enabled = false;
             }
         }
     }

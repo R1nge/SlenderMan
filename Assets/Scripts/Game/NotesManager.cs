@@ -9,7 +9,7 @@ namespace Game
         public event Action OnAllNotesCollected;
         [SerializeField] private Note note;
         [SerializeField] private int notesAmount;
-        [SerializeField] private Transform[] spawnPositions;
+        [SerializeField] private NoteSpawnPoint[] spawnPositions;
         private NetworkVariable<int> _spawnedAmount;
         private NetworkVariable<int> _collectedAmount;
 
@@ -36,7 +36,12 @@ namespace Game
 
             for (int i = 0; i < _spawnedAmount.Value; i++)
             {
-                var instance = Instantiate(note, spawnPositions[i].position, Quaternion.identity);
+                var instance = Instantiate
+                (
+                    note,
+                    spawnPositions[i].position,
+                    Quaternion.Euler(spawnPositions[i].rotation)
+                );
                 instance.GetComponent<NetworkObject>().Spawn(true);
             }
         }
@@ -54,7 +59,7 @@ namespace Game
         [ClientRpc]
         private void OnAllNotesCollectedClientRpc()
         {
-            if(IsServer) return;
+            if (IsServer) return;
             OnAllNotesCollected?.Invoke();
         }
     }
