@@ -1,10 +1,11 @@
 ﻿using Characters.Human.Pickup;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace Characters.Human.Interact
 {
-    public class HumanInteractController : MonoBehaviour
+    public class HumanInteractController : NetworkBehaviour
     {
         [SerializeField] private float rayDistance;
         [SerializeField] private Transform camera;
@@ -19,6 +20,8 @@ namespace Characters.Human.Interact
 
         private void Update()
         {
+            if (!IsOwner) return;
+            
             if (Input.GetKeyDown(KeyCode.E))
             {
                 Interact();
