@@ -15,7 +15,12 @@ namespace Game
 
         public void Interact(Inventory inventory)
         {
-            if (!IsServer) return;
+            InteractServerRpc();
+        }
+
+        [ServerRpc(RequireOwnership = false)]
+        private void InteractServerRpc()
+        {
             _notesManager.Collect();
             NetworkObject.Despawn(true);
         }
