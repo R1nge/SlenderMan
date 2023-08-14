@@ -24,6 +24,10 @@ namespace Lobby
 
         public int GetPlayerCount() => _lobbyData.Count;
 
+        public int HumanCount() => _lobbyData.Count(pair => pair.Value.Team == Teams.Human);
+
+        public int SlenderCount() => _lobbyData.Count(pair => pair.Value.Team == Teams.Slender);
+
         public ulong GetSlenderId()
         {
             foreach (var pair in _lobbyData)
@@ -33,7 +37,7 @@ namespace Lobby
                     return pair.Value.Id;
                 }
             }
-            
+
             Debug.LogError("Slender ID not found", this);
 
             return 999999;
@@ -41,6 +45,12 @@ namespace Lobby
 
         public void SelectSlender(string name, ulong id)
         {
+            if (SlenderCount() >= 1)
+            {
+                Debug.LogError("Slender already exists");
+                return;
+            }
+
             var data = new LobbyData(name, id, Teams.Slender);
             if (_lobbyData.ContainsKey(id))
             {
