@@ -7,10 +7,10 @@ namespace Characters.Human
         public ItemType Type { get; }
         public uint Count;
 
-        public enum ItemType
+        public enum ItemType : int
         {
-            Gasoline,
-            KeyHouseWithToilet
+            Gasoline = 0,
+            KeyHouseWithToilet = 1
         }
 
         public Item(ItemType type, uint count)
