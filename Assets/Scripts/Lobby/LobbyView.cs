@@ -1,4 +1,4 @@
-﻿using System;
+﻿using Steamworks;
 using TMPro;
 using Unity.Netcode;
 using UnityEngine;
@@ -18,6 +18,13 @@ namespace Lobby
             slender.onClick.AddListener(SelectSlender);
             start.onClick.AddListener(StartGame);
             NetworkManager.Singleton.SceneManager.OnLoadComplete += OnLoadComplete;
+            
+            SteamMatchmaking.OnLobbyInvite += (friend, lobby) =>
+            {
+                SceneManager.UnloadSceneAsync("MainMenu");
+                NetworkManager.Singleton.StartClient();
+                SteamMatchmaking.JoinLobbyAsync(lobby.Id);
+            };
         }
 
         private void Start()
@@ -31,7 +38,7 @@ namespace Lobby
             {
                 UnloadLobby();
             }
-            
+
             if (IsServer && sceneName != "Game")
             {
                 var humanCount = Lobby.Instance.HumanCount();
@@ -43,7 +50,17 @@ namespace Lobby
 
         private void SelectHuman()
         {
-            var name = PlayerPrefs.GetString("Name", "NN");
+            string name;
+
+            if (SteamClient.IsValid)
+            {
+                name = SteamClient.Name ?? $"{Random.Range(0, 111100101)}";
+            }
+            else
+            {
+                name = $"{Random.Range(0, 111100101)}";
+            }
+
             SelectHumanServerRpc(name);
         }
 
@@ -66,7 +83,17 @@ namespace Lobby
 
         private void SelectSlender()
         {
-            var name = PlayerPrefs.GetString("Name", "NN");
+            string name;
+
+            if (SteamClient.IsValid)
+            {
+                name = SteamClient.Name ?? $"{Random.Range(0, 111100101)}";
+            }
+            else
+            {
+                name = $"{Random.Range(0, 111100101)}";
+            }
+
             SelectSlenderServerRpc(name);
         }
 

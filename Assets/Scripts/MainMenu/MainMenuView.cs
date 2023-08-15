@@ -1,77 +1,78 @@
-﻿using TMPro;
+﻿using Netcode.Transports.Facepunch;
+using Steamworks;
+using TMPro;
 using Unity.Netcode;
-using Unity.Netcode.Transports.UTP;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace MainMenu
 {
     public class MainMenuView : MonoBehaviour
     {
-        [SerializeField] private TMP_InputField nameInput, ipInput;
+        [SerializeField] private TMP_InputField lobbyId;
         [SerializeField] private Button host, join;
-        private MainMenu _mainMenu;
+        private Steamworks.Data.Lobby _lobby;
 
         private void Awake()
         {
-            _mainMenu = new MainMenu();
             host.onClick.AddListener(Host);
-            join.onClick.AddListener(Join);
-            ipInput.onEndEdit.AddListener(SetIp);
-            NetworkManager.Singleton.OnServerStarted += OnServerStarted;
-            
-            nameInput.onEndEdit.AddListener(OnNameSet);
+            join.onClick.AddListener(() => Join(ulong.Parse(lobbyId.text)));
         }
 
-        //TODO: redo
-        private void OnNameSet(string name)
+        private void Start()
         {
-            PlayerPrefs.SetString("Name", name);
-            PlayerPrefs.Save();
-        }
-
-        private void OnServerStarted()
-        {
-            _mainMenu.LoadLobby();
-        }
-
-        private void Host()
-        {
-            if (IsValid())
+            SteamMatchmaking.OnLobbyCreated += (result, lobby) =>
             {
-                _mainMenu.Host();
-            }
+                _lobby = lobby;
+                Debug.LogError(result == Result.OK ? "Lobby created" : "Failed to create a lobby");
+                Debug.LogError("Game Started");
+                _lobby.SetPublic();
+                _lobby.SetJoinable(true);
+                _lobby.SetGameServer(_lobby.Owner.Id);
+                Debug.LogError(_lobby.Id);
+                Debug.LogError(_lobby.Owner.Id);
+            };
+
+            SteamMatchmaking.OnLobbyEntered += lobby =>
+            {
+                if (NetworkManager.Singleton.IsHost || NetworkManager.Singleton.IsServer)
+                {
+                    return;
+                }
+
+                _lobby = lobby;
+
+                Debug.LogError("Entered the lobby");
+                Help();
+            };
+
+            SteamMatchmaking.OnLobbyMemberJoined += (lobby, friend) => { Debug.LogError("Entered the lobby"); };
+
+            SteamMatchmaking.OnLobbyInvite += (friend, lobby) => { Debug.LogError($"Invited {friend.Name}"); };
         }
 
-        private void Join()
+        private async void Host()
         {
-            if (IsValid())
-            {
-                _mainMenu.Join();
-            }
+            SceneManager.UnloadSceneAsync("MainMenu");
+            NetworkManager.Singleton.StartHost();
+            await SteamMatchmaking.CreateLobbyAsync(4);
+            NetworkManager.Singleton.SceneManager.LoadScene("Lobby", LoadSceneMode.Single);
         }
 
-        private void SetIp(string newIp)
+        private async void Join(ulong lobbyId)
         {
-            var transport = NetworkManager.Singleton.GetComponent<UnityTransport>();
-            transport.ConnectionData.Address = newIp;
+            Debug.LogError("TRYING TO JOIN");
+            await SteamMatchmaking.JoinLobbyAsync(lobbyId);
+            Debug.LogError("JOINED");
         }
 
-        private bool IsValid()
+        private void Help()
         {
-            if (string.IsNullOrEmpty(ipInput.text) || string.IsNullOrWhiteSpace(ipInput.text))
-            {
-                Debug.LogError("MainMenu: ip is not set");
-                return false;
-            }
-            
-            if (string.IsNullOrEmpty(nameInput.text) || string.IsNullOrWhiteSpace(nameInput.text))
-            {
-                Debug.LogError("MainMenu: name is not set");
-                return false;
-            }
-
-            return true;
+            NetworkManager.Singleton.GetComponent<FacepunchTransport>().targetSteamId = _lobby.Owner.Id;
+            NetworkManager.Singleton.StartClient();
+            SceneManager.UnloadSceneAsync("MainMenu");
+            Debug.LogError("Started a client");
         }
 
         private void OnDestroy()
