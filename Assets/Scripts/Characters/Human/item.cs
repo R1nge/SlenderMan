@@ -1,8 +1,11 @@
-﻿namespace Characters.Human
+﻿using UnityEngine;
+
+namespace Characters.Human
 {
     public class Item
     {
         public ItemType Type { get; }
+        public uint Count;
 
         public enum ItemType
         {
@@ -10,9 +13,10 @@
             KeyHouseWithToilet
         }
 
-        public Item(ItemType type)
+        public Item(ItemType type, uint count)
         {
             Type = type;
+            Count = count;
         }
     }
 }

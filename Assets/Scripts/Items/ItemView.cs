@@ -12,13 +12,22 @@ namespace Items
 
         private void Awake()
         {
-            _item = new Item(item);
+            _item = new Item(item, 1);
         }
 
         public void Pickup(Inventory inventory)
         {
-            inventory.Add(_item);
+            AddServerRpc(inventory.gameObject);
             DestroyServerRpc();
+        }
+
+        [ServerRpc(RequireOwnership = false)]
+        private void AddServerRpc(NetworkObjectReference player)
+        {
+            if (player.TryGet(out NetworkObject playerGo))
+            {
+                playerGo.GetComponent<Inventory>().Add(_item);
+            }
         }
 
         [ServerRpc(RequireOwnership = false)]

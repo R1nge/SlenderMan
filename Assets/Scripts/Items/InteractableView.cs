@@ -19,21 +19,26 @@ namespace Items
 
         public void Interact(Inventory inventory)
         {
-            if (inventory.HasItem(requiredItem))
-            {
-                inventory.Remove(requiredItem);
-                InteractServerRpc();
-            }
+            InteractServerRpc(inventory.gameObject);
         }
 
         [ServerRpc(RequireOwnership = false)]
-        private void InteractServerRpc()
+        private void InteractServerRpc(NetworkObjectReference player)
         {
             if (_started.Value) return;
-            _started.Value = true;
-            OnInteracted?.Invoke();
-            print("INTERACT SERVER RPC");
-            InteractClientRpc();
+            if (player.TryGet(out NetworkObject playerNet))
+            {
+                var inventory = playerNet.GetComponent<Inventory>();
+
+                if (inventory.HasItem(requiredItem))
+                {
+                    inventory.Remove(requiredItem);
+                    _started.Value = true;
+                    OnInteracted?.Invoke();
+                    print("INTERACT SERVER RPC");
+                    InteractClientRpc();
+                }
+            }
         }
 
         [ClientRpc]

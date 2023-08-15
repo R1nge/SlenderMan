@@ -18,13 +18,6 @@ namespace Lobby
             slender.onClick.AddListener(SelectSlender);
             start.onClick.AddListener(StartGame);
             NetworkManager.Singleton.SceneManager.OnLoadComplete += OnLoadComplete;
-            
-            SteamMatchmaking.OnLobbyInvite += (friend, lobby) =>
-            {
-                SceneManager.UnloadSceneAsync("MainMenu");
-                NetworkManager.Singleton.StartClient();
-                SteamMatchmaking.JoinLobbyAsync(lobby.Id);
-            };
         }
 
         private void Start()
