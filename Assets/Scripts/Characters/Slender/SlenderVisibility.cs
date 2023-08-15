@@ -19,6 +19,7 @@ namespace Characters.Slender
             if (IsOwner)
             {
                 _visibilityController.IsVisible().OnValueChanged += VisibilityChanged;
+                ChangeVisibilityServerRpc(false);
             }
         }
 
