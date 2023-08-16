@@ -10,6 +10,7 @@ namespace Items
     public class ItemData : SerializedMonoBehaviour
     {
         [SerializeField] private Dictionary<Item.ItemType, ItemDataSo> _items = new();
+        [SerializeField] private Dictionary<Item.ItemType, ItemDataSo> _models = new();
         public static ItemData Instance { get; private set; }
 
         private void Awake()
@@ -25,12 +26,24 @@ namespace Items
 
         public Sprite GetIcon(Item.ItemType type) => _items[type].Icon;
 
-        public void Spawn(Item.ItemType item, uint amount, Vector3 position)
+        public NetworkObject SpawnItem(Item.ItemType item, uint amount, Vector3 position, Quaternion rotation,
+            Transform parent = null)
         {
-            var inst = Instantiate(_items[item].Prefab, position, Quaternion.identity);
+            var inst = Instantiate(_items[item].Prefab, position, rotation, parent);
             var net = inst.GetComponent<NetworkObject>();
             net.Spawn();
+            net.transform.parent = parent;
             net.GetComponent<ItemView>().SetCount(amount);
+            return net;
+        }
+
+        public NetworkObject SpawnModel(Item.ItemType item, Vector3 position, Quaternion rotation, Transform parent = null)
+        {
+            var inst = Instantiate(_models[item].Prefab, position, rotation, parent);
+            var net = inst.GetComponent<NetworkObject>();
+            net.Spawn();
+            net.transform.parent = parent;
+            return net;
         }
     }
 }

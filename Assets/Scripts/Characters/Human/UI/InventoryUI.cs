@@ -15,7 +15,7 @@ namespace Characters.Human.UI
         private void Awake()
         {
             _inventory = GetComponent<Inventory>();
-            _inventory.Items.OnListChanged += UpdateUI;
+            _inventory.PocketItems.OnListChanged += UpdateUI;
         }
 
         private void Start() => inventory.SetActive(IsOwner);
@@ -27,11 +27,11 @@ namespace Characters.Human.UI
                 Destroy(content.GetChild(i).gameObject);    
             }
             
-            for (int i = 0; i < _inventory.Items.Count; i++)
+            for (int i = 0; i < _inventory.PocketItems.Count; i++)
             {
                 var slot = Instantiate(slotPrefab, content);
-                slot.SetIcon(ItemData.Instance.GetIcon(_inventory.Items[i].Type));
-                slot.SetCount(_inventory.Items[i].Count);
+                slot.SetIcon(ItemData.Instance.GetIcon(_inventory.PocketItems[i].itemType));
+                slot.SetCount(_inventory.PocketItems[i].count);
             }
         }
     }

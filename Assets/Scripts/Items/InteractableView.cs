@@ -30,9 +30,9 @@ namespace Items
             {
                 var inventory = playerNet.GetComponent<Inventory>();
 
-                if (inventory.HasItem(requiredItem, requiredItem.Count))
+                if (inventory.HasItem(requiredItem, requiredItem.count))
                 {
-                    inventory.Remove(requiredItem, requiredItem.Count);
+                    inventory.Remove(requiredItem, requiredItem.count);
                     _started.Value = true;
                     OnInteracted?.Invoke();
                     print("INTERACT SERVER RPC");

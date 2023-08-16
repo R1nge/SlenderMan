@@ -858,6 +858,7 @@ MonoBehaviour:
     ReferencedUnityObjects:
     - {fileID: 11400000, guid: c3df4fb51b0fbbd4bb36fb9b74353fe6, type: 2}
     - {fileID: 11400000, guid: 52848c9ec4c28bd45879b3b27ecc04ab, type: 2}
+    - {fileID: 11400000, guid: 6f73a9d9c0a5d634e9511b63a9455442, type: 2}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -904,6 +905,44 @@ MonoBehaviour:
     - Name: $v
       Entry: 10
       Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: _models
+      Entry: 7
+      Data: 2|System.Collections.Generic.Dictionary`2[[Characters.Human.Item+ItemType,
+        Assembly-CSharp],[Items.ItemDataSo, Assembly-CSharp]], mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 3|System.Collections.Generic.EnumEqualityComparer`1[[Characters.Human.Item+ItemType,
+        Assembly-CSharp]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 0
+    - Name: $v
+      Entry: 10
+      Data: 2
     - Name: 
       Entry: 8
       Data: 

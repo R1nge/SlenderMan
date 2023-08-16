@@ -88,8 +88,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d9de032007c482bbf9877d6d9de8a45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  equipType: 0
+  itemType: 1
   count: 1
-  item: 1
 --- !u!1 &7996167527892378974
 GameObject:
   m_ObjectHideFlags: 0

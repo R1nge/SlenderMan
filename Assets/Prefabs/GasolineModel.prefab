@@ -12,9 +12,8 @@ GameObject:
   - component: {fileID: 8327959061962785267}
   - component: {fileID: 3308183290038382233}
   - component: {fileID: 8913947692797527104}
-  - component: {fileID: 8716090417420429923}
   m_Layer: 0
-  m_Name: Gasoline
+  m_Name: GasolineModel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -107,21 +106,6 @@ MonoBehaviour:
   InLocalSpace: 0
   Interpolate: 1
   SlerpPosition: 0
---- !u!114 &8716090417420429923
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6299469916536512021}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0d9de032007c482bbf9877d6d9de8a45, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  equipType: 1
-  itemType: 0
-  count: 2
 --- !u!1001 &6703779585026833835
 PrefabInstance:
   m_ObjectHideFlags: 0

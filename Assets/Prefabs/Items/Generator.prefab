@@ -175,8 +175,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   requiredItem:
-    Type: 0
-    Count: 1
+    equipType: 1
+    itemType: 0
+    count: 2
 --- !u!114 &3225612650811905305
 MonoBehaviour:
   m_ObjectHideFlags: 0

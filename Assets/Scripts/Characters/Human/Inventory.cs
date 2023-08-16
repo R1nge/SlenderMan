@@ -7,48 +7,75 @@ namespace Characters.Human
     public class Inventory : NetworkBehaviour
     {
         [SerializeField] private int maxSize;
-        private NetworkList<Item> _items;
-        private NetworkVariable<Item> _currentItem;
+        [SerializeField] private Hand hand;
+        private NetworkList<Item> _pocketItems;
+        private NetworkVariable<Item> _currentPocketItem;
+        private NetworkVariable<Item> _handItem;
         private int _index;
 
-        public NetworkList<Item> Items => _items;
-        public NetworkVariable<Item> CurrentItem => _currentItem;
+        public NetworkList<Item> PocketItems => _pocketItems;
+        public NetworkVariable<Item> CurrentPocketItem => _currentPocketItem;
+        public NetworkVariable<Item> CurrentHandItem => _handItem;
 
         private void Awake()
         {
-            _items = new();
-            _currentItem = new();
+            _pocketItems = new();
+            _currentPocketItem = new();
+            _handItem = new();
         }
 
         public void Add(Item item)
         {
-            if (_items.Count < maxSize)
+            if (item.equipType == Item.EquipType.Hand)
             {
-                _items.Add(item);
+                _handItem.Value = item;
+                var net = ItemData.Instance.SpawnModel(item.itemType, hand.transform.position, Quaternion.identity);
+                hand.SetChild(net.transform);
             }
-            else
+            else if (item.equipType == Item.EquipType.Pocket)
             {
-                Debug.LogError("Inventory is full. Can't add new item.");
+                if (_pocketItems.Count < maxSize)
+                {
+                    _pocketItems.Add(item);
+                }
+                else
+                {
+                    Debug.LogError("Inventory is full. Can't add new item.");
+                }
             }
         }
 
         public void Remove(Item item, uint amount)
         {
-            for (int i = 0; i < _items.Count; i++)
+            if (item.equipType == Item.EquipType.Pocket)
             {
-                if (_items[i].Type == item.Type)
+                for (int i = 0; i < _pocketItems.Count; i++)
                 {
-                    var item1 = _items[i];
-                    item1.Count -= amount;
+                    if (_pocketItems[i].itemType == item.itemType)
+                    {
+                        var item1 = _pocketItems[i];
+                        item1.count -= amount;
 
-                    if (item1.Count == 0)
-                    {
-                        RemoveAt(i);
-                        print("REMOVED");
+                        if (item1.count == 0)
+                        {
+                            RemoveAt(i);
+                            print("REMOVED");
+                        }
+                        else
+                        {
+                            _pocketItems[i] = item1;
+                        }
                     }
-                    else
+                }
+            }
+            else if (item.equipType == Item.EquipType.Hand)
+            {
+                if (_handItem.Value.itemType == item.itemType)
+                {
+                    if (_handItem.Value.count >= item.count)
                     {
-                        _items[i] = item1;
+                        hand.DestroyChild();
+                        _handItem = new NetworkVariable<Item>();
                     }
                 }
             }
@@ -56,21 +83,40 @@ namespace Characters.Human
 
         public void RemoveAt(int index)
         {
-            _items.RemoveAt(index);
+            _pocketItems.RemoveAt(index);
         }
 
         public bool HasItem(Item item, uint amount)
         {
-            for (int i = 0; i < _items.Count; i++)
+            if (item.equipType == Item.EquipType.Pocket)
             {
-                if (_items[i].Type == item.Type)
+                for (int i = 0; i < _pocketItems.Count; i++)
                 {
-                    if (_items[i].Count >= amount)
+                    if (_pocketItems[i].itemType == item.itemType)
+                    {
+                        if (_pocketItems[i].count >= amount)
+                        {
+                            return true;
+                        }
+                    }
+                }
+
+                return false;
+            }
+
+            if (item.equipType == Item.EquipType.Hand)
+            {
+                if (_handItem.Value.itemType == item.itemType)
+                {
+                    if (_handItem.Value.count >= amount)
                     {
                         return true;
                     }
                 }
+
+                return false;
             }
+
 
             return false;
         }
@@ -79,7 +125,14 @@ namespace Characters.Human
         {
             if (!IsOwner) return;
 
-            if (_items.Count == 0)
+            if (Input.GetKeyDown(KeyCode.H))
+            {
+                DropServerRpc(_handItem.Value);
+                Debug.LogError("Drop hand item");
+                return;
+            }
+
+            if (_pocketItems.Count == 0)
             {
                 _index = 0;
                 return;
@@ -87,7 +140,8 @@ namespace Characters.Human
 
             if (Input.GetKeyDown(KeyCode.G))
             {
-                DropServerRpc();
+                DropServerRpc(_currentPocketItem.Value);
+                Debug.LogError("Drop pocket item");
                 return;
             }
 
@@ -105,36 +159,46 @@ namespace Characters.Human
         [ServerRpc(RequireOwnership = false)]
         private void ChangeForwardServerRpc()
         {
-            _index = (_index + 1) % _items.Count;
-            _currentItem.Value = _items[_index];
-            Debug.LogError(_currentItem.Value.Type);
+            _index = (_index + 1) % _pocketItems.Count;
+            _currentPocketItem.Value = _pocketItems[_index];
+            Debug.LogError(_currentPocketItem.Value.itemType);
         }
 
         [ServerRpc(RequireOwnership = false)]
         private void ChangeBackwardServerRpc()
         {
-            _index = Mathf.Clamp((_index - 1) % _items.Count, 0, _items.Count);
-            _currentItem.Value = _items[_index];
-            Debug.LogError(_currentItem.Value.Type);
+            _index = Mathf.Clamp((_index - 1) % _pocketItems.Count, 0, _pocketItems.Count);
+            _currentPocketItem.Value = _pocketItems[_index];
+            Debug.LogError(_currentPocketItem.Value.itemType);
         }
 
         [ServerRpc(RequireOwnership = false)]
-        private void DropServerRpc()
+        private void DropServerRpc(Item item)
         {
-            if (_items.Contains(_currentItem.Value))
+            if (item.equipType == Item.EquipType.Pocket)
             {
-                ItemData.Instance.Spawn(_currentItem.Value.Type, _items[_index].Count, transform.position);
-                var currentItemValue = _currentItem.Value;
-                currentItemValue.Count = 0;
-                _items[_index] = currentItemValue;
-                Debug.LogError($"TRYING TO DROP {_currentItem.Value.Type}");
-
-                if (_items[_index].Count == 0)
+                if (_pocketItems.Contains(_currentPocketItem.Value))
                 {
-                    print(_items[_index].Count);
-                    RemoveAt(_index);
-                    _currentItem = new NetworkVariable<Item>();
+                    ItemData.Instance.SpawnItem(_currentPocketItem.Value.itemType, _pocketItems[_index].count,
+                        transform.position, Quaternion.identity);
+                    var currentItemValue = _currentPocketItem.Value;
+                    currentItemValue.count = 0;
+                    _pocketItems[_index] = currentItemValue;
+                    Debug.LogError($"TRYING TO DROP {_currentPocketItem.Value.itemType}");
+
+                    if (_pocketItems[_index].count == 0)
+                    {
+                        print(_pocketItems[_index].count);
+                        RemoveAt(_index);
+                        _currentPocketItem = new NetworkVariable<Item>();
+                    }
                 }
+            }
+            else if (item.equipType == Item.EquipType.Hand)
+            {
+                hand.DestroyChild();
+                ItemData.Instance.SpawnItem(item.itemType, item.count, transform.position, Quaternion.identity);
+                _handItem = new NetworkVariable<Item>();
             }
         }
     }
