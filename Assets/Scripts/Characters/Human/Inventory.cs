@@ -77,18 +77,21 @@ namespace Characters.Human
         [ServerRpc(RequireOwnership = false)]
         private void DropServerRpc()
         {
-            Debug.LogError($"TRYING TO DROP {_currentItem.Value.Type}");
-            ItemSpawner.Instance.Spawn(_currentItem.Value.Type, _items[_index].Count, transform.position);
-            var item = _items[_index];
-            item.Count--;
-            print(item.Count);
-
-            if (item.Count == 0)
+            if (_items.Contains(_currentItem.Value))
             {
-                print(item.Count);
-                Remove(_currentItem.Value);
-                print(_items.Contains(_currentItem.Value));
+                ItemData.Instance.Spawn(_currentItem.Value.Type, _items[_index].Count, transform.position);
+                var item = _items[_index];
+                item.Count--;
+                Debug.LogError($"TRYING TO DROP {_currentItem.Value.Type}");
+
+                if (item.Count == 0)
+                {
+                    print(item.Count);
+                    Remove(_currentItem.Value);
+                    print(_items.Contains(_currentItem.Value));
+                }
             }
+            
         }
 
         public override void OnDestroy()

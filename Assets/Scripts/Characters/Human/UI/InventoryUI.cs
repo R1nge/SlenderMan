@@ -33,7 +33,7 @@ namespace Characters.Human.UI
             for (int i = 0; i < _inventory.Items.Count; i++)
             {
                 var slot = Instantiate(slotPrefab, content);
-                slot.SetIcon(Items.ItemIcons.Instance.GetIcon(_inventory.Items[i].Type));
+                slot.SetIcon(Items.ItemData.Instance.GetIcon(_inventory.Items[i].Type));
             }
         }
 
@@ -70,7 +70,7 @@ namespace Characters.Human.UI
             for (int i = 0; i < _inventory.Items.Count; i++)
             {
                 var slot = Instantiate(slotPrefab, content);
-                slot.SetIcon(Items.ItemIcons.Instance.GetIcon(_inventory.Items[i].Type));
+                slot.SetIcon(Items.ItemData.Instance.GetIcon(_inventory.Items[i].Type));
             }
             
             inventory.SetActive(true);

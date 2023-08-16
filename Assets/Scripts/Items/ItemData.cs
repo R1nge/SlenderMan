@@ -7,27 +7,29 @@ using UnityEngine;
 
 namespace Items
 {
-    public class ItemSpawner : SerializedMonoBehaviour
+    public class ItemData : SerializedMonoBehaviour
     {
-        [SerializeField] private Dictionary<Item.ItemType, GameObject> _items = new();
-        public static ItemSpawner Instance { get; private set; }
+        [SerializeField] private Dictionary<Item.ItemType, ItemDataSo> _items = new();
+        public static ItemData Instance { get; private set; }
 
         private void Awake()
         {
             if (Instance != null)
             {
-                throw new Exception("Multiple Item Spawners defined!");
+                throw new Exception("Multiple Item Data defined!");
             }
 
             DontDestroyOnLoad(gameObject);
             Instance = this;
         }
 
+        public Sprite GetIcon(Item.ItemType type) => _items[type].Icon;
+
         public void Spawn(Item.ItemType item, uint amount, Vector3 position)
         {
             for (int i = 0; i < amount; i++)
             {
-                var inst = Instantiate(_items[item], position, Quaternion.identity);
+                var inst = Instantiate(_items[item].Prefab, position, Quaternion.identity);
                 inst.GetComponent<NetworkObject>().Spawn();
             }
         }
