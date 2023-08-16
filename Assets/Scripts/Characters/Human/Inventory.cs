@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Items;
+﻿using Items;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -8,6 +6,7 @@ namespace Characters.Human
 {
     public class Inventory : NetworkBehaviour
     {
+        [SerializeField] private int maxSize;
         private NetworkList<Item> _items;
         private NetworkVariable<Item> _currentItem;
         private int _index;
@@ -23,7 +22,14 @@ namespace Characters.Human
 
         public void Add(Item item)
         {
-            _items.Add(item);
+            if (_items.Count < maxSize)
+            {
+                _items.Add(item);
+            }
+            else
+            {
+                Debug.LogError("Inventory is full. Can't add new item.");
+            }
         }
 
         public void Remove(Item item, uint amount)
@@ -130,12 +136,6 @@ namespace Characters.Human
                     _currentItem = new NetworkVariable<Item>();
                 }
             }
-        }
-
-        public override void OnDestroy()
-        {
-            base.OnDestroy();
-            _items?.Dispose();
         }
     }
 }
