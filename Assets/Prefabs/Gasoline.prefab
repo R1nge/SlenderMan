@@ -120,7 +120,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   equipType: 1
-  itemType: 0
+  itemType: 1
   count: 2
 --- !u!1001 &6703779585026833835
 PrefabInstance:

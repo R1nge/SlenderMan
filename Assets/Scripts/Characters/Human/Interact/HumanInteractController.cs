@@ -21,7 +21,7 @@ namespace Characters.Human.Interact
         private void Update()
         {
             if (!IsOwner) return;
-            
+
             if (Input.GetKeyDown(KeyCode.E))
             {
                 Interact();
@@ -38,8 +38,10 @@ namespace Characters.Human.Interact
                 if (hit.transform.TryGetComponent(out IIntractable intractable))
                 {
                     intractable.Interact(_inventory);
+                    return;
                 }
-                else if (hit.transform.TryGetComponent(out IPickupable pickupable))
+
+                if (hit.transform.TryGetComponent(out IPickupable pickupable))
                 {
                     pickupable.Pickup(_inventory);
                 }

@@ -176,7 +176,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   requiredItem:
     equipType: 1
-    itemType: 0
+    itemType: 1
     count: 2
 --- !u!114 &3225612650811905305
 MonoBehaviour:

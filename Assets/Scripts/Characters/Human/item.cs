@@ -10,10 +10,12 @@ namespace Characters.Human
         public ItemType itemType;
         public uint count;
 
+        //TODO: find analog
         public enum ItemType
         {
-            Gasoline = 0,
-            KeyHouseWithToilet = 1
+            None,
+            Gasoline = 1,
+            KeyHouseWithToilet = 2
         }
 
         public enum EquipType

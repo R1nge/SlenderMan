@@ -22,7 +22,6 @@ namespace Items
         public void Pickup(Inventory inventory)
         {
             AddServerRpc(inventory.gameObject);
-            DestroyServerRpc();
         }
 
         [ServerRpc(RequireOwnership = false)]
@@ -30,12 +29,14 @@ namespace Items
         {
             if (player.TryGet(out NetworkObject playerGo))
             {
-                playerGo.GetComponent<Inventory>().Add(_item);
+                if (playerGo.GetComponent<Inventory>().Add(_item))
+                {
+                    Destroy();
+                }
             }
         }
 
-        [ServerRpc(RequireOwnership = false)]
-        private void DestroyServerRpc()
+        private void Destroy()
         {
             NetworkObject.Despawn(true);
         }

@@ -24,25 +24,35 @@ namespace Characters.Human
             _handItem = new();
         }
 
-        public void Add(Item item)
+        public bool Add(Item item)
         {
             if (item.equipType == Item.EquipType.Hand)
             {
+                if (_handItem.Value.itemType == item.itemType)
+                {
+                    Debug.LogError("Hand is full");
+                    return false;
+                }
+
                 _handItem.Value = item;
                 var net = ItemData.Instance.SpawnModel(item.itemType, hand.transform.position, Quaternion.identity);
                 hand.SetChild(net.transform);
+                return true;
             }
-            else if (item.equipType == Item.EquipType.Pocket)
+
+            if (item.equipType == Item.EquipType.Pocket)
             {
                 if (_pocketItems.Count < maxSize)
                 {
                     _pocketItems.Add(item);
+                    return true;
                 }
-                else
-                {
-                    Debug.LogError("Inventory is full. Can't add new item.");
-                }
+
+                Debug.LogError("Pockets are full. Can't add new item.");
+                return false;
             }
+
+            return false;
         }
 
         public void Remove(Item item, uint amount)
