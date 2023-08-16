@@ -73,11 +73,16 @@ namespace Characters.Human
         {
             if (!IsOwner) return;
 
-            if (_items.Count == 0) return;
+            if (_items.Count == 0)
+            {
+                _index = 0;
+                return;
+            }
 
             if (Input.GetKeyDown(KeyCode.G))
             {
                 DropServerRpc();
+                return;
             }
 
             var delta = Input.GetAxis("Mouse ScrollWheel") * 10;
