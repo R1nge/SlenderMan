@@ -27,11 +27,10 @@ namespace Items
 
         public void Spawn(Item.ItemType item, uint amount, Vector3 position)
         {
-            for (int i = 0; i < amount; i++)
-            {
-                var inst = Instantiate(_items[item].Prefab, position, Quaternion.identity);
-                inst.GetComponent<NetworkObject>().Spawn();
-            }
+            var inst = Instantiate(_items[item].Prefab, position, Quaternion.identity);
+            var net = inst.GetComponent<NetworkObject>();
+            net.Spawn();
+            net.GetComponent<ItemView>().SetCount(amount);
         }
     }
 }

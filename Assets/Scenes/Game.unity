@@ -3631,6 +3631,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1853362295819589556, guid: 94be3d9e412e2694691cc240ab7b4a80, type: 3}
+      propertyPath: requiredItem.Count
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 3225612650811905305, guid: 94be3d9e412e2694691cc240ab7b4a80, type: 3}
       propertyPath: wall
       value: 

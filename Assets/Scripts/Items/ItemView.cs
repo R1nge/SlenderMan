@@ -7,13 +7,16 @@ namespace Items
 {
     public class ItemView : NetworkBehaviour, IPickupable
     {
+        [SerializeField] private uint count;
         [SerializeField] private Item.ItemType item;
         private Item _item;
 
         private void Awake()
         {
-            _item = new Item(item, 1);
+            _item = new Item(item, count);
         }
+
+        public void SetCount(uint newCount) => count = newCount;
 
         public void Pickup(Inventory inventory)
         {

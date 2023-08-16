@@ -26,14 +26,47 @@ namespace Characters.Human
             _items.Add(item);
         }
 
-        public void Remove(Item item)
+        public void Remove(Item item, uint amount)
         {
-            _items.Remove(item);
+            for (int i = 0; i < _items.Count; i++)
+            {
+                if (_items[i].Type == item.Type)
+                {
+                    var item1 = _items[i];
+                    item1.Count -= amount;
+
+                    if (item1.Count == 0)
+                    {
+                        RemoveAt(i);
+                        print("REMOVED");
+                    }
+                    else
+                    {
+                        _items[i] = item1;
+                    }
+                }
+            }
         }
 
-        public bool HasItem(Item item)
+        public void RemoveAt(int index)
         {
-            return _items.Contains(item);
+            _items.RemoveAt(index);
+        }
+
+        public bool HasItem(Item item, uint amount)
+        {
+            for (int i = 0; i < _items.Count; i++)
+            {
+                if (_items[i].Type == item.Type)
+                {
+                    if (_items[i].Count >= amount)
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
         }
 
         private void Update()
@@ -80,18 +113,18 @@ namespace Characters.Human
             if (_items.Contains(_currentItem.Value))
             {
                 ItemData.Instance.Spawn(_currentItem.Value.Type, _items[_index].Count, transform.position);
-                var item = _items[_index];
-                item.Count--;
+                var currentItemValue = _currentItem.Value;
+                currentItemValue.Count = 0;
+                _items[_index] = currentItemValue;
                 Debug.LogError($"TRYING TO DROP {_currentItem.Value.Type}");
 
-                if (item.Count == 0)
+                if (_items[_index].Count == 0)
                 {
-                    print(item.Count);
-                    Remove(_currentItem.Value);
-                    print(_items.Contains(_currentItem.Value));
+                    print(_items[_index].Count);
+                    RemoveAt(_index);
+                    _currentItem = new NetworkVariable<Item>();
                 }
             }
-            
         }
 
         public override void OnDestroy()
