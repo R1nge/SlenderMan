@@ -9,7 +9,7 @@ namespace Items
     public class InteractableView : NetworkBehaviour, IIntractable
     {
         public event Action OnInteracted;
-        [SerializeField] private Item.ItemType requiredItem;
+        [SerializeField] private Item requiredItem;
         private NetworkVariable<bool> _started;
 
         private void Awake()

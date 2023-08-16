@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Items;
 using Unity.Netcode;
 using UnityEngine;
@@ -7,68 +8,90 @@ namespace Characters.Human
 {
     public class Inventory : NetworkBehaviour
     {
-        private Dictionary<Item.ItemType, Item> _items = new();
-        private Item.ItemType _currentItem;
+        private NetworkList<Item> _items;
+        private NetworkVariable<Item> _currentItem;
         private int _index;
+
+        private void Awake()
+        {
+            _items = new();
+            _currentItem = new();
+        }
 
         public void Add(Item item)
         {
-            _items.Add(item.Type, item);
+            _items.Add(item);
         }
 
-        public void Remove(Item.ItemType itemType)
+        public void Remove(Item item)
         {
-            _items.Remove(itemType);
+            _items.Remove(item);
         }
 
-        public bool HasItem(Item.ItemType type) => _items.ContainsKey(type);
+        public bool HasItem(Item item)
+        {
+            return _items.Contains(item);
+        }
 
         private void Update()
         {
             if (!IsOwner) return;
+
+            if (_items.Count == 0) return;
+
             if (Input.GetKeyDown(KeyCode.G))
             {
                 DropServerRpc();
             }
 
-            if (_items.Count == 0) return;
-
             var delta = Input.GetAxis("Mouse ScrollWheel") * 10;
             if (delta >= 1)
             {
-                _index = (_index + 1) % _items.Count;
-                _currentItem = _items[(Item.ItemType)_index].Type;
+                ChangeForwardServerRpc();
             }
             else if (delta <= -1)
             {
-                _index = (_index - 1) % _items.Count;
-                _currentItem = _items[(Item.ItemType)_index].Type;
+                ChangeBackwardServerRpc();
             }
+        }
+
+        [ServerRpc(RequireOwnership = false)]
+        private void ChangeForwardServerRpc()
+        {
+            _index = (_index + 1) % _items.Count;
+            _currentItem.Value = _items[_index];
+            Debug.LogError(_currentItem.Value.Type);
+        }
+
+        [ServerRpc(RequireOwnership = false)]
+        private void ChangeBackwardServerRpc()
+        {
+            _index = Mathf.Clamp((_index - 1) % _items.Count, 0, _items.Count);
+            _currentItem.Value = _items[_index];
+            Debug.LogError(_currentItem.Value.Type);
         }
 
         [ServerRpc(RequireOwnership = false)]
         private void DropServerRpc()
         {
-            if (_items.ContainsKey(_currentItem))
+            Debug.LogError($"TRYING TO DROP {_currentItem.Value.Type}");
+            ItemSpawner.Instance.Spawn(_currentItem.Value.Type, _items[_index].Count, transform.position);
+            var item = _items[_index];
+            item.Count--;
+            print(item.Count);
+
+            if (item.Count == 0)
             {
-                print($"TRYING TO DROP {_currentItem}");
-                ItemSpawner.Instance.Spawn(_currentItem, _items[_currentItem].Count,
-                    transform.position);
-                _items[_currentItem].Count--;
-                print(_items[_currentItem].Count);
-
-                if (_items[_currentItem].Count < 0)
-                {
-                    _items[_currentItem].Count = 0;
-                }
-
-                if (_items[_currentItem].Count == 0)
-                {
-                    print(_items[_currentItem].Count);
-                    Remove(_currentItem);
-                    print(_items.ContainsKey(_currentItem));
-                }
+                print(item.Count);
+                Remove(_currentItem.Value);
+                print(_items.Contains(_currentItem.Value));
             }
+        }
+
+        public override void OnDestroy()
+        {
+            base.OnDestroy();
+            _items?.Dispose();   
         }
     }
 }
