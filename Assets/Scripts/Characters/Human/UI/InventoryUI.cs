@@ -20,7 +20,7 @@ namespace Characters.Human.UI
 
         private void Start()
         {
-            inventory.SetActive(IsOwner);
+            inventory.SetActive(false);
         }
 
         private void UpdateUI(NetworkListEvent<Item> changeEvent)
