@@ -12,6 +12,9 @@ namespace Characters.Human
         private NetworkVariable<Item> _currentItem;
         private int _index;
 
+        public NetworkList<Item> Items => _items;
+        public NetworkVariable<Item> CurrentItem => _currentItem;
+
         private void Awake()
         {
             _items = new();
@@ -91,7 +94,7 @@ namespace Characters.Human
         public override void OnDestroy()
         {
             base.OnDestroy();
-            _items?.Dispose();   
+            _items?.Dispose();
         }
     }
 }
