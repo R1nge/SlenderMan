@@ -37,13 +37,11 @@ namespace Items
             return net;
         }
 
-        public NetworkObject SpawnModel(Item.ItemType item, Vector3 position, Quaternion rotation, Transform parent = null)
+        public GameObject SpawnModel(Item.ItemType item, Vector3 position, Quaternion rotation, Transform parent = null)
         {
             var inst = Instantiate(_models[item].Prefab, position, rotation, parent);
-            var net = inst.GetComponent<NetworkObject>();
-            net.Spawn();
-            net.transform.parent = parent;
-            return net;
+            inst.transform.parent = parent;
+            return inst;
         }
     }
 }

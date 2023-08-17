@@ -11,7 +11,7 @@ namespace Characters.Human
 
         public void DestroyChild()
         {
-            _child.gameObject.GetComponent<NetworkObject>().Despawn(true);
+            Destroy(_child.gameObject);
             _child = null;
         }
 

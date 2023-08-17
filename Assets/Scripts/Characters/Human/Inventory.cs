@@ -35,8 +35,9 @@ namespace Characters.Human
                 }
 
                 _handItem.Value = item;
-                var net = ItemData.Instance.SpawnModel(item.itemType, hand.transform.position, Quaternion.identity);
-                hand.SetChild(net.transform);
+                var go = ItemData.Instance.SpawnModel(item.itemType, hand.transform.position, Quaternion.identity);
+                hand.SetChild(go.transform);
+                SpawnClientRpc(item);
                 return true;
             }
 
@@ -53,6 +54,14 @@ namespace Characters.Human
             }
 
             return false;
+        }
+
+        [ClientRpc]
+        private void SpawnClientRpc(Item item)
+        {
+            if (IsServer) return;
+            var net = ItemData.Instance.SpawnModel(item.itemType, hand.transform.position, Quaternion.identity);
+            hand.SetChild(net.transform);
         }
 
         public void Remove(Item item, uint amount)
@@ -86,6 +95,24 @@ namespace Characters.Human
                     {
                         hand.DestroyChild();
                         _handItem = new NetworkVariable<Item>();
+                    }
+                }
+            }
+            
+            RemoveClientRpc(item);
+        }
+
+        [ClientRpc]
+        private void RemoveClientRpc(Item item)
+        {
+            if (IsServer) return;
+            if (item.equipType == Item.EquipType.Hand)
+            {
+                if (_handItem.Value.itemType == item.itemType)
+                {
+                    if (_handItem.Value.count >= item.count)
+                    {
+                        hand.DestroyChild();
                     }
                 }
             }
@@ -209,6 +236,17 @@ namespace Characters.Human
                 hand.DestroyChild();
                 ItemData.Instance.SpawnItem(item.itemType, item.count, transform.position, Quaternion.identity);
                 _handItem = new NetworkVariable<Item>();
+                DropClientRpc(item);
+            }
+        }
+
+        [ClientRpc]
+        private void DropClientRpc(Item item)
+        {
+            if (IsServer) return;
+            if (item.equipType == Item.EquipType.Hand)
+            {
+                hand.DestroyChild();
             }
         }
     }
