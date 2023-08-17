@@ -7,7 +7,7 @@ namespace Characters.Human
     public class Inventory : NetworkBehaviour
     {
         [SerializeField] private int maxSize;
-        [SerializeField] private Hand hand;
+        [SerializeField] private Transform hand;
         private NetworkList<Item> _pocketItems;
         private NetworkVariable<Item> _currentPocketItem;
         private NetworkVariable<Item> _handItem;
@@ -35,8 +35,6 @@ namespace Characters.Human
                 }
 
                 _handItem.Value = item;
-                var go = ItemData.Instance.SpawnModel(item.itemType, hand.transform.position, Quaternion.identity);
-                hand.SetChild(go.transform);
                 SpawnClientRpc(item);
                 return true;
             }
@@ -59,9 +57,8 @@ namespace Characters.Human
         [ClientRpc]
         private void SpawnClientRpc(Item item)
         {
-            if (IsServer) return;
-            var net = ItemData.Instance.SpawnModel(item.itemType, hand.transform.position, Quaternion.identity);
-            hand.SetChild(net.transform);
+            var go = ItemData.Instance.SpawnModel(item.itemType, hand.transform.position, Quaternion.identity);
+            go.transform.parent = hand;
         }
 
         public void Remove(Item item, uint amount)
@@ -93,28 +90,20 @@ namespace Characters.Human
                 {
                     if (_handItem.Value.count >= item.count)
                     {
-                        hand.DestroyChild();
                         _handItem = new NetworkVariable<Item>();
                     }
                 }
             }
-            
+
             RemoveClientRpc(item);
         }
 
         [ClientRpc]
         private void RemoveClientRpc(Item item)
         {
-            if (IsServer) return;
             if (item.equipType == Item.EquipType.Hand)
             {
-                if (_handItem.Value.itemType == item.itemType)
-                {
-                    if (_handItem.Value.count >= item.count)
-                    {
-                        hand.DestroyChild();
-                    }
-                }
+                DestroyHandItem();
             }
         }
 
@@ -233,7 +222,6 @@ namespace Characters.Human
             }
             else if (item.equipType == Item.EquipType.Hand)
             {
-                hand.DestroyChild();
                 ItemData.Instance.SpawnItem(item.itemType, item.count, transform.position, Quaternion.identity);
                 _handItem = new NetworkVariable<Item>();
                 DropClientRpc(item);
@@ -243,11 +231,15 @@ namespace Characters.Human
         [ClientRpc]
         private void DropClientRpc(Item item)
         {
-            if (IsServer) return;
             if (item.equipType == Item.EquipType.Hand)
             {
-                hand.DestroyChild();
+                DestroyHandItem();
             }
+        }
+
+        private void DestroyHandItem()
+        {
+            Destroy(hand.GetChild(0).gameObject);
         }
     }
 }
