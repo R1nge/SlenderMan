@@ -7,7 +7,7 @@ namespace Characters.Human
         private readonly CharacterController _characterController;
         private readonly HumanAnimationController _animator;
         private Vector3 _moveDirection = Vector3.zero;
-        private float _walkingSpeed, _runningSpeed;
+        private float _crouchSpeed, _walkingSpeed, _runningSpeed;
         private float _gravity;
 
         public HumanMovement(CharacterController characterController, HumanAnimationController animator)
@@ -26,24 +26,37 @@ namespace Characters.Human
             _runningSpeed = speed;
         }
 
+        public void SetCrouchSpeed(float speed)
+        {
+            _crouchSpeed = speed;
+        }
+
         public void SetGravity(float gravity)
         {
             _gravity = gravity;
         }
 
-        public void Move(Transform player, bool run)
+        public void Move(Transform player, bool run, bool crouching)
         {
             Vector3 forward = player.TransformDirection(Vector3.forward);
             Vector3 right = player.TransformDirection(Vector3.right);
 
-            float curSpeedX = (run ? _runningSpeed : _walkingSpeed) * Input.GetAxis("Vertical");
-            float curSpeedY = (run ? _runningSpeed : _walkingSpeed) * Input.GetAxis("Horizontal");
+            float curSpeedX =
+                crouching
+                    ? _crouchSpeed * Input.GetAxis("Vertical")
+                    : (run ? _runningSpeed : _walkingSpeed) * Input.GetAxis("Vertical");
+            float curSpeedY =
+                crouching
+                    ? _crouchSpeed * Input.GetAxis("Horizontal")
+                    : (run ? _runningSpeed : _walkingSpeed) * Input.GetAxis("Horizontal");
+
             _moveDirection = forward * curSpeedX + right * curSpeedY;
 
             var speed = (Mathf.Abs(curSpeedX) + Mathf.Abs(curSpeedY)) / _runningSpeed;
             speed = Mathf.Clamp01(speed);
             _animator.SetSpeed(speed);
             _animator.SetDirection(new Vector2(Input.GetAxis("Vertical"), Input.GetAxis("Horizontal")));
+            _animator.SetCrouching(crouching);
 
             if (!_characterController.isGrounded)
             {

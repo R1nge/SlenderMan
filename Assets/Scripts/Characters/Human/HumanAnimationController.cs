@@ -8,6 +8,7 @@ namespace Characters.Human
         private static readonly int Speed = Animator.StringToHash("Speed");
         private static readonly int Vertical = Animator.StringToHash("Vertical");
         private static readonly int Horizontal = Animator.StringToHash("Horizontal");
+        private static readonly int Crouching = Animator.StringToHash("Crouching");
 
         public void SetSpeed(float speed)
         {
@@ -18,6 +19,11 @@ namespace Characters.Human
         {
             animator.SetFloat(Vertical, dir.x);
             animator.SetFloat(Horizontal, dir.y);
+        }
+
+        public void SetCrouching(bool crouching)
+        {
+            animator.SetBool(Crouching, crouching);
         }
     }
 }

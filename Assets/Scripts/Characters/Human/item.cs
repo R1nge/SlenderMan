@@ -9,8 +9,7 @@ namespace Characters.Human
         public EquipType equipType;
         public ItemType itemType;
         public uint count;
-
-        //TODO: find analog
+        
         public enum ItemType
         {
             None,
