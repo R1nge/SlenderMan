@@ -3899,11 +3899,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a55ebaed08074cea8a9d9b0f6a208aef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
   objectives:
-  - title: Repair the car
-    tasks:
-    - description: Fuel the car
-      completed: 0
+  - {fileID: 11400000, guid: 7e9d2324eac0db44da51f388748c3725, type: 2}
 --- !u!1001 &1762096359
 PrefabInstance:
   m_ObjectHideFlags: 0

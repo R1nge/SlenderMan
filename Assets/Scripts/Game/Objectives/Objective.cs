@@ -1,19 +1,21 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using System.Linq;
+using Sirenix.OdinInspector;
+using UnityEngine;
 
 namespace Game.Objectives
 {
-    [Serializable]
-    public class Objective
+    [CreateAssetMenu(menuName = "Objective", fileName = "Objective")]
+    public class Objective : SerializedScriptableObject
     {
         public string title;
-        public Task[] tasks;
+        public Dictionary<Task.TaskType, Task> tasks;
 
-        public bool AllTaskCompleted => tasks.All(task => task.completed);
+        public bool AllTaskCompleted => tasks.All(pair => pair.Value.completed);
 
-        public void CompleteTask(int index)
+        public void CompleteTask(Task.TaskType type)
         {
-            tasks[index].completed = true;
+            tasks[type].completed = true;
         }
     }
 }
