@@ -40,7 +40,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 12
-      Data: 1
+      Data: 2
     - Name: 
       Entry: 7
       Data: 
@@ -53,6 +53,27 @@ MonoBehaviour:
     - Name: description
       Entry: 1
       Data: Fuel the car
+    - Name: completed
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 1
+    - Name: $v
+      Entry: 7
+      Data: 3|Game.Objectives.Task, Assembly-CSharp
+    - Name: description
+      Entry: 1
+      Data: Change the car battery
     - Name: completed
       Entry: 5
       Data: false

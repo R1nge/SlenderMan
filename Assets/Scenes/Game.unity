@@ -919,7 +919,9 @@ MonoBehaviour:
     ReferencedUnityObjects:
     - {fileID: 11400000, guid: c3df4fb51b0fbbd4bb36fb9b74353fe6, type: 2}
     - {fileID: 11400000, guid: 52848c9ec4c28bd45879b3b27ecc04ab, type: 2}
+    - {fileID: 11400000, guid: 461019827eaecee458d3cb2711459086, type: 2}
     - {fileID: 11400000, guid: 6f73a9d9c0a5d634e9511b63a9455442, type: 2}
+    - {fileID: 11400000, guid: e6e74db4ac0655c42bda03aa478f7f5a, type: 2}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -944,7 +946,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 12
-      Data: 2
+      Data: 3
     - Name: 
       Entry: 7
       Data: 
@@ -962,10 +964,22 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 3
-      Data: 2
+      Data: 3
     - Name: $v
       Entry: 10
       Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 2
+    - Name: $v
+      Entry: 10
+      Data: 2
     - Name: 
       Entry: 8
       Data: 
@@ -984,7 +998,7 @@ MonoBehaviour:
       Data: 1
     - Name: 
       Entry: 12
-      Data: 1
+      Data: 2
     - Name: 
       Entry: 7
       Data: 
@@ -993,7 +1007,19 @@ MonoBehaviour:
       Data: 1
     - Name: $v
       Entry: 10
+      Data: 3
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
       Data: 2
+    - Name: $v
+      Entry: 10
+      Data: 4
     - Name: 
       Entry: 8
       Data: 
@@ -4204,6 +4230,7 @@ GameObject:
   - component: {fileID: 1857404087}
   - component: {fileID: 1857404088}
   - component: {fileID: 1857404089}
+  - component: {fileID: 1857404090}
   m_Layer: 0
   m_Name: Car
   m_TagString: Untagged
@@ -4329,7 +4356,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca050b4e5efd44e8940d150c98098159, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  car: {fileID: 1857404089}
+  fuelTank: {fileID: 1857404089}
+  battery: {fileID: 1857404090}
 --- !u!114 &1857404089
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4346,6 +4374,22 @@ MonoBehaviour:
     equipType: 1
     itemType: 1
     count: 2
+--- !u!114 &1857404090
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1857404082}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 122b63fcb67442ea8ea5c7d2aa348cdd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  requiredItem:
+    equipType: 1
+    itemType: 2
+    count: 1
 --- !u!1001 &1885416516
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5806,6 +5850,67 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1001 &2828659637494714601
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1415527787559397044, guid: 88d44118653e702449d0c6839a7d9ff4, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -29.823
+      objectReference: {fileID: 0}
+    - target: {fileID: 1415527787559397044, guid: 88d44118653e702449d0c6839a7d9ff4, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.48
+      objectReference: {fileID: 0}
+    - target: {fileID: 1415527787559397044, guid: 88d44118653e702449d0c6839a7d9ff4, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -29.66
+      objectReference: {fileID: 0}
+    - target: {fileID: 1415527787559397044, guid: 88d44118653e702449d0c6839a7d9ff4, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1415527787559397044, guid: 88d44118653e702449d0c6839a7d9ff4, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1415527787559397044, guid: 88d44118653e702449d0c6839a7d9ff4, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1415527787559397044, guid: 88d44118653e702449d0c6839a7d9ff4, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1415527787559397044, guid: 88d44118653e702449d0c6839a7d9ff4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1415527787559397044, guid: 88d44118653e702449d0c6839a7d9ff4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1415527787559397044, guid: 88d44118653e702449d0c6839a7d9ff4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3311847022116455735, guid: 88d44118653e702449d0c6839a7d9ff4, type: 3}
+      propertyPath: m_Name
+      value: Battery
+      objectReference: {fileID: 0}
+    - target: {fileID: 8699959855794146608, guid: 88d44118653e702449d0c6839a7d9ff4, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 2540461158
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 88d44118653e702449d0c6839a7d9ff4, type: 3}
 --- !u!1 &3144874755797341667
 GameObject:
   m_ObjectHideFlags: 0
@@ -8285,6 +8390,7 @@ SceneRoots:
   - {fileID: 558309918}
   - {fileID: 1647388392}
   - {fileID: 7805322483321609108}
+  - {fileID: 2828659637494714601}
   - {fileID: 1465538891}
   - {fileID: 9219646778017852098}
   - {fileID: 33971584}
