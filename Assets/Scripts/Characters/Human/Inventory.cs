@@ -57,7 +57,7 @@ namespace Characters.Human
         [ClientRpc]
         private void SpawnClientRpc(Item item)
         {
-            var go = ItemData.Instance.SpawnModel(item.itemType, hand.transform.position, Quaternion.identity);
+            var go = ItemDataManager.Instance.SpawnModel(item.itemType, hand.transform.position, Quaternion.identity);
             go.transform.parent = hand;
         }
 
@@ -205,7 +205,7 @@ namespace Characters.Human
             {
                 if (_pocketItems.Contains(_currentPocketItem.Value))
                 {
-                    ItemData.Instance.SpawnItem(_currentPocketItem.Value.itemType, _pocketItems[_index].count,
+                    ItemDataManager.Instance.SpawnItem(_currentPocketItem.Value.itemType, _pocketItems[_index].count,
                         transform.position, Quaternion.identity);
                     var currentItemValue = _currentPocketItem.Value;
                     currentItemValue.count = 0;
@@ -222,7 +222,7 @@ namespace Characters.Human
             }
             else if (item.equipType == Item.EquipType.Hand)
             {
-                ItemData.Instance.SpawnItem(item.itemType, item.count, transform.position, Quaternion.identity);
+                ItemDataManager.Instance.SpawnItem(item.itemType, item.count, transform.position, Quaternion.identity);
                 _handItem = new NetworkVariable<Item>();
                 DropClientRpc(item);
             }

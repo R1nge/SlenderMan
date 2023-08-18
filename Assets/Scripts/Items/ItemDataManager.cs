@@ -7,17 +7,17 @@ using UnityEngine;
 
 namespace Items
 {
-    public class ItemData : SerializedMonoBehaviour
+    public class ItemDataManager : SerializedMonoBehaviour
     {
         [SerializeField] private Dictionary<Item.ItemType, ItemDataSo> _items = new();
         [SerializeField] private Dictionary<Item.ItemType, ItemDataSo> _models = new();
-        public static ItemData Instance { get; private set; }
+        public static ItemDataManager Instance { get; private set; }
 
         private void Awake()
         {
             if (Instance != null)
             {
-                throw new Exception("Multiple Item Data defined!");
+                throw new Exception("Multiple Item Data Managers defined!");
             }
 
             DontDestroyOnLoad(gameObject);

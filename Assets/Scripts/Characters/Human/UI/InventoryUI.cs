@@ -30,7 +30,7 @@ namespace Characters.Human.UI
             for (int i = 0; i < _inventory.PocketItems.Count; i++)
             {
                 var slot = Instantiate(slotPrefab, content);
-                slot.SetIcon(ItemData.Instance.GetIcon(_inventory.PocketItems[i].itemType));
+                slot.SetIcon(ItemDataManager.Instance.GetIcon(_inventory.PocketItems[i].itemType));
                 slot.SetCount(_inventory.PocketItems[i].count);
             }
         }
