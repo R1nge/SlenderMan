@@ -10,6 +10,7 @@ namespace Game.Objectives
         public event Action<Task.TaskType> OnTaskComplete;
 
         [SerializeField] private Objective[] objectives;
+        public Objective[] Objectives => objectives;
         public static ObjectiveManager Instance { get; private set; }
 
         private void Awake()

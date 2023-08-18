@@ -1,5 +1,6 @@
 ﻿using System;
 using Game.Objectives;
+using Game.States;
 using Items;
 using Unity.Netcode;
 using UnityEngine;
@@ -11,8 +12,15 @@ public class Car : NetworkBehaviour
 
     private void Awake()
     {
+        ObjectiveManager.Instance.OnObjectiveComplete += OnCarRepairedServerRpc;
         fuelTank.OnInteracted += FuelTankOnOnInteracted;
         battery.OnInteracted += OnBatteryChangedServerRpc;
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    private void OnCarRepairedServerRpc(int obj)
+    {
+        StateManager.Instance.ChangeState(StateManager.States.EndGame);
     }
 
     private void FuelTankOnOnInteracted()
@@ -24,11 +32,27 @@ public class Car : NetworkBehaviour
     private void OnTankFueledServerRpc()
     {
         ObjectiveManager.Instance.CompleteTask(0, Task.TaskType.CarFuel);
+        OnTankFueledClientRpc();
+    }
+
+    [ClientRpc]
+    private void OnTankFueledClientRpc()
+    {
+        if (IsServer) return;
+        ObjectiveManager.Instance.CompleteTask(0, Task.TaskType.CarFuel);
     }
 
     [ServerRpc(RequireOwnership = false)]
     private void OnBatteryChangedServerRpc()
     {
+        ObjectiveManager.Instance.CompleteTask(0, Task.TaskType.CarBattery);
+        OnBatteryChangedClientRpc();
+    }
+
+    [ClientRpc]
+    private void OnBatteryChangedClientRpc()
+    {
+        if (IsServer) return;
         ObjectiveManager.Instance.CompleteTask(0, Task.TaskType.CarBattery);
     }
 
