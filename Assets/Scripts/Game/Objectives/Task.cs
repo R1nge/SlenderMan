@@ -8,7 +8,8 @@ namespace Game.Objectives
     {
         public enum TaskType
         {
-            CarFuel
+            CarFuel,
+            CarBattery
         }
 
         [SerializeField] public string description;

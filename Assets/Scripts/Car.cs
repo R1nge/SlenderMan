@@ -6,21 +6,36 @@ using UnityEngine;
 
 public class Car : NetworkBehaviour
 {
-    [SerializeField] private InteractableView car;
+    [SerializeField] private InteractableView fuelTank;
+    [SerializeField] private InteractableView battery;
 
     private void Awake()
     {
-        car.OnInteracted += CarOnOnInteracted;
+        fuelTank.OnInteracted += FuelTankOnOnInteracted;
+        battery.OnInteracted += OnBatteryChangedServerRpc;
     }
 
-    private void CarOnOnInteracted()
+    private void FuelTankOnOnInteracted()
     {
-        InteractedServerRpc();
+        OnTankFueledServerRpc();
     }
 
     [ServerRpc(RequireOwnership = false)]
-    private void InteractedServerRpc()
+    private void OnTankFueledServerRpc()
     {
-        ObjectiveManager.Instance.CompleteTask(0,0);
+        ObjectiveManager.Instance.CompleteTask(0, Task.TaskType.CarFuel);
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    private void OnBatteryChangedServerRpc()
+    {
+        ObjectiveManager.Instance.CompleteTask(0, Task.TaskType.CarBattery);
+    }
+
+    public override void OnDestroy()
+    {
+        base.OnDestroy();
+        fuelTank.OnInteracted -= FuelTankOnOnInteracted;
+        battery.OnInteracted -= OnBatteryChangedServerRpc;
     }
 }
