@@ -23,16 +23,16 @@ namespace Characters.Human.UI
         private void UpdateUI(Task.TaskType obj)
         {
             var str = "";
-            for (int i = 0; i < ObjectiveManager.Instance.Objectives.Length; i++)
+            for (int i = 0; i < ObjectiveManager.Instance.Objectives.Count; i++)
             {
-                for (int j = 0; j < ObjectiveManager.Instance.Objectives[i].tasks.Count; j++)
+                for (int j = 0; j < ObjectiveManager.Instance.Objectives[(ObjectiveManager.ObjectiveType)i].tasks.Count; j++)
                 {
-                    if (ObjectiveManager.Instance.Objectives[i].tasks[(Task.TaskType)j].completed)
+                    if (ObjectiveManager.Instance.Objectives[(ObjectiveManager.ObjectiveType)i].tasks[(Task.TaskType)j].completed)
                     {
                         continue;
                     }
 
-                    var objective = ObjectiveManager.Instance.Objectives[i];
+                    var objective = ObjectiveManager.Instance.Objectives[(ObjectiveManager.ObjectiveType)i];
                     str += $"Title: {objective.title} Description: {objective.tasks[(Task.TaskType)j].description}; ";
                 }
             }

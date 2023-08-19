@@ -12,13 +12,13 @@ public class Car : NetworkBehaviour
 
     private void Awake()
     {
-        ObjectiveManager.Instance.OnObjectiveComplete += OnCarRepairedServerRpc;
+        ObjectiveManager.Instance.OnObjectiveComplete += ObjectiveCompleteServerRpc;
         fuelTank.OnInteracted += FuelTankOnOnInteracted;
         battery.OnInteracted += OnBatteryChangedServerRpc;
     }
 
     [ServerRpc(RequireOwnership = false)]
-    private void OnCarRepairedServerRpc(int obj)
+    private void ObjectiveCompleteServerRpc(ObjectiveManager.ObjectiveType objectiveType)
     {
         StateManager.Instance.ChangeState(StateManager.States.EndGame);
     }

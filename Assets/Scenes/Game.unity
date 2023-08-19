@@ -4172,14 +4172,51 @@ MonoBehaviour:
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
-    ReferencedUnityObjects: []
+    ReferencedUnityObjects:
+    - {fileID: 11400000, guid: 7e9d2324eac0db44da51f388748c3725, type: 2}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
-    SerializationNodes: []
-  objectives:
-  - {fileID: 11400000, guid: 7e9d2324eac0db44da51f388748c3725, type: 2}
+    SerializationNodes:
+    - Name: objectives
+      Entry: 7
+      Data: 0|System.Collections.Generic.Dictionary`2[[Game.Objectives.ObjectiveManager+ObjectiveType,
+        Assembly-CSharp],[Game.Objectives.Objective, Assembly-CSharp]], mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 1|System.Collections.Generic.EnumEqualityComparer`1[[Game.Objectives.ObjectiveManager+ObjectiveType,
+        Assembly-CSharp]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 0
+    - Name: $v
+      Entry: 10
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
 --- !u!1001 &1762096359
 PrefabInstance:
   m_ObjectHideFlags: 0

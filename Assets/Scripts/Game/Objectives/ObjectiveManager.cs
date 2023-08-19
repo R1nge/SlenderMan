@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -6,11 +7,15 @@ namespace Game.Objectives
 {
     public class ObjectiveManager : SerializedMonoBehaviour
     {
-        public event Action<int> OnObjectiveComplete;
+        public enum ObjectiveType
+        {
+            CarRepair
+        }
+        public event Action<ObjectiveType> OnObjectiveComplete;
         public event Action<Task.TaskType> OnTaskComplete;
 
-        [SerializeField] private Objective[] objectives;
-        public Objective[] Objectives => objectives;
+        [SerializeField] private Dictionary<ObjectiveType, Objective> objectives;
+        public Dictionary<ObjectiveType, Objective> Objectives => objectives;
         public static ObjectiveManager Instance { get; private set; }
 
         private void Awake()
@@ -24,15 +29,15 @@ namespace Game.Objectives
             Instance = this;
         }
 
-        public void CompleteTask(int objectiveIndex, Task.TaskType type)
+        public void CompleteTask(ObjectiveType objectiveType, Task.TaskType taskType)
         {
-            objectives[objectiveIndex].CompleteTask(type);
-            OnTaskComplete?.Invoke(type);
-            Debug.LogError($"Completed task {objectives[objectiveIndex].tasks[type].description}");
-            if (objectives[objectiveIndex].AllTaskCompleted)
+            objectives[objectiveType].CompleteTask(taskType);
+            Debug.LogError($"Completed task {objectives[objectiveType].tasks[taskType].description}");
+            OnTaskComplete?.Invoke(taskType);
+            if (objectives[objectiveType].AllTaskCompleted)
             {
-                OnObjectiveComplete?.Invoke(objectiveIndex);
-                Debug.LogError($"Completed objective {objectives[objectiveIndex].title}");
+                Debug.LogError($"Completed objective {objectives[objectiveType].title}");
+                OnObjectiveComplete?.Invoke(objectiveType);
             }
         }
     }
