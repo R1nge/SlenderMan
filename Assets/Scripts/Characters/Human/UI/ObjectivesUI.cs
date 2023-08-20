@@ -58,6 +58,11 @@ namespace Characters.Human.UI
         {
             objectiveParent.GetChild((int)objectiveType).GetChild(2).GetChild((int)taskType).GetComponent<TaskUI>()
                 .CompleteText();
+
+            if (ObjectiveManager.Instance.Objectives[objectiveType].AllTaskCompleted)
+            {
+                objectiveParent.GetChild((int)objectiveType).GetComponent<ObjectiveUI>().CompleteText();
+            }
         }
     }
 }
