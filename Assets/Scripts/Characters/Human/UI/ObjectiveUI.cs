@@ -18,10 +18,10 @@ namespace Characters.Human.UI
         {
             title.text = text;
         }
+
         public void CompleteText()
         {
             title.text = $"<s>{title.text}</s>";
         }
-        
     }
 }

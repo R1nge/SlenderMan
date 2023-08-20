@@ -9,7 +9,8 @@ namespace Game.Objectives
     {
         public enum ObjectiveType
         {
-            CarRepair
+            CarRepair,
+            BoatRepair
         }
         public event Action<ObjectiveType> OnObjectiveComplete;
         public event Action<ObjectiveType, Task.TaskType> OnTaskComplete;
