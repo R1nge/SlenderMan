@@ -143,7 +143,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_IgnoreLayout: 0
   m_MinWidth: 800
-  m_MinHeight: 256
+  m_MinHeight: 64
   m_PreferredWidth: -1
   m_PreferredHeight: -1
   m_FlexibleWidth: -1
@@ -160,6 +160,7 @@ GameObject:
   - component: {fileID: 5352871380902959985}
   - component: {fileID: 1210221730088584942}
   - component: {fileID: 1887240942097843679}
+  - component: {fileID: 6526901466740235566}
   m_Layer: 5
   m_Name: Tasks
   m_TagString: Untagged
@@ -226,12 +227,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_IgnoreLayout: 0
   m_MinWidth: 800
-  m_MinHeight: 181.44
+  m_MinHeight: 64
   m_PreferredWidth: -1
   m_PreferredHeight: -1
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+--- !u!114 &6526901466740235566
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8063946759934747174}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bdb7aee36b34f2284f356246540884e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objective: {fileID: 4102281810817403722}
+  tasks: {fileID: 1887240942097843679}
 --- !u!1 &8325180208439183423
 GameObject:
   m_ObjectHideFlags: 0

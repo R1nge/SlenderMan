@@ -10,6 +10,7 @@ namespace Characters.Human.UI
         [SerializeField] private Transform objectiveParent;
         [SerializeField] private ObjectiveUI objectivePrefab;
         [SerializeField] private TaskUI taskPrefab;
+        private TasksExpand _expand;
         private Transform _taskParent;
 
         private void Awake()
@@ -46,10 +47,12 @@ namespace Characters.Human.UI
                 objectiveInstance.SetTitle(objective.title);
                 objectiveInstance.SetIcon(objective.icon);
                 _taskParent = objectiveInstance.transform.GetChild(2);
+                _expand = _taskParent.GetComponent<TasksExpand>();
                 foreach (var task in objective.tasks.Values)
                 {
                     var taskInstance = Instantiate(taskPrefab, _taskParent);
                     taskInstance.SetText(task.description);
+                    _expand.Expand();
                 }
             }
         }
