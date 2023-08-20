@@ -15,14 +15,7 @@ namespace Game.States
         private void Awake()
         {
             _playerSpawner = FindObjectOfType<PlayerSpawner>();
-            _notesManager = FindObjectOfType<NotesManager>();
-            _notesManager.OnAllNotesCollected += AllNotesCollected;
             NetworkManager.Singleton.SceneManager.OnLoadEventCompleted += OnMapLoaded;
-        }
-
-        private void AllNotesCollected()
-        {
-            StateManager.Instance.ChangeState(StateManager.States.EndGame);
         }
 
         private void OnMapLoaded(string _, LoadSceneMode __, List<ulong> loaded, List<ulong> ____)
@@ -61,11 +54,6 @@ namespace Game.States
         private void Warmup()
         {
             _playerSpawner.SpawnServerRpc();
-            if (IsServer)
-            {
-                _notesManager.SpawnNotes();
-            }
-
             print("WARMUP");
         }
 
