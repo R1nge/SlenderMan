@@ -10,6 +10,7 @@ namespace Game.Objectives
     public class Objective : SerializedScriptableObject
     {
         public string title;
+        public Sprite icon;
         public Dictionary<Task.TaskType, Task> tasks;
 
         public bool AllTaskCompleted => tasks.All(pair => pair.Value.completed);
