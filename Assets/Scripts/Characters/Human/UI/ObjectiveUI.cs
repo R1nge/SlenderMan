@@ -1,4 +1,6 @@
-﻿using Game.Objectives;
+﻿using System;
+using System.Collections.Generic;
+using Game.Objectives;
 using TMPro;
 using Unity.Netcode;
 using UnityEngine;
@@ -7,7 +9,9 @@ namespace Characters.Human.UI
 {
     public class ObjectiveUI : NetworkBehaviour
     {
-        [SerializeField] private TextMeshProUGUI objectivesText;
+        [SerializeField] private GameObject objectiveCanvas;
+        [SerializeField] private Transform objectiveParent, taskParent;
+        [SerializeField] private TaskUI taskPrefab;
 
         private void Awake()
         {
@@ -16,28 +20,40 @@ namespace Characters.Human.UI
 
         private void Start()
         {
-            objectivesText.gameObject.SetActive(IsOwner);
-            UpdateUI(Task.TaskType.CarBattery);
+            objectiveCanvas.gameObject.SetActive(false);
+            InitUI();
         }
 
-        private void UpdateUI(Task.TaskType obj)
+        private void Update()
         {
-            var str = "";
-            for (int i = 0; i < ObjectiveManager.Instance.Objectives.Count; i++)
+            if (Input.GetKeyDown(KeyCode.Tab))
             {
-                for (int j = 0; j < ObjectiveManager.Instance.Objectives[(ObjectiveManager.ObjectiveType)i].tasks.Count; j++)
+                if (objectiveCanvas.activeInHierarchy)
                 {
-                    if (ObjectiveManager.Instance.Objectives[(ObjectiveManager.ObjectiveType)i].tasks[(Task.TaskType)j].completed)
-                    {
-                        continue;
-                    }
-
-                    var objective = ObjectiveManager.Instance.Objectives[(ObjectiveManager.ObjectiveType)i];
-                    str += $"Title: {objective.title} Description: {objective.tasks[(Task.TaskType)j].description}; ";
+                    objectiveCanvas.SetActive(false);
+                }
+                else
+                {
+                    objectiveCanvas.SetActive(true);
                 }
             }
+        }
 
-            objectivesText.text = str;
+        private void InitUI()
+        {
+            foreach (var objective in ObjectiveManager.Instance.Objectives.Values)
+            {
+                foreach (var task in objective.tasks.Values)
+                {
+                    var taskInstance = Instantiate(taskPrefab, taskParent);
+                    taskInstance.SetText(task.description);
+                }
+            }
+        }
+
+        private void UpdateUI(ObjectiveManager.ObjectiveType objectiveType, Task.TaskType taskType)
+        {
+            objectiveParent.GetChild((int)objectiveType).GetChild(2).GetChild((int)taskType).GetComponent<TaskUI>().CompleteText();
         }
     }
 }

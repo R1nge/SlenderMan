@@ -12,7 +12,7 @@ namespace Game.Objectives
             CarRepair
         }
         public event Action<ObjectiveType> OnObjectiveComplete;
-        public event Action<Task.TaskType> OnTaskComplete;
+        public event Action<ObjectiveType, Task.TaskType> OnTaskComplete;
 
         [SerializeField] private Dictionary<ObjectiveType, Objective> objectives;
         public Dictionary<ObjectiveType, Objective> Objectives => objectives;
@@ -33,7 +33,7 @@ namespace Game.Objectives
         {
             objectives[objectiveType].CompleteTask(taskType);
             Debug.LogError($"Completed task {objectives[objectiveType].tasks[taskType].description}");
-            OnTaskComplete?.Invoke(taskType);
+            OnTaskComplete?.Invoke(objectiveType, taskType);
             if (objectives[objectiveType].AllTaskCompleted)
             {
                 Debug.LogError($"Completed objective {objectives[objectiveType].title}");
