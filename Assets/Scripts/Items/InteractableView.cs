@@ -10,11 +10,13 @@ namespace Items
     {
         public event Action OnInteracted;
         [SerializeField] private Item requiredItem;
-        private NetworkVariable<bool> _started;
+        private NetworkVariable<bool> _interacted;
+
+        public bool Interacted => _interacted.Value;
 
         private void Awake()
         {
-            _started = new NetworkVariable<bool>();
+            _interacted = new NetworkVariable<bool>();
         }
 
         public void Interact(Inventory inventory)
@@ -25,7 +27,7 @@ namespace Items
         [ServerRpc(RequireOwnership = false)]
         private void InteractServerRpc(NetworkObjectReference player)
         {
-            if (_started.Value) return;
+            if (_interacted.Value) return;
             if (player.TryGet(out NetworkObject playerNet))
             {
                 var inventory = playerNet.GetComponent<Inventory>();
@@ -33,7 +35,7 @@ namespace Items
                 if (inventory.HasItem(requiredItem, requiredItem.count))
                 {
                     inventory.Remove(requiredItem, requiredItem.count);
-                    _started.Value = true;
+                    _interacted.Value = true;
                     OnInteracted?.Invoke();
                     print("INTERACT SERVER RPC");
                     InteractClientRpc();

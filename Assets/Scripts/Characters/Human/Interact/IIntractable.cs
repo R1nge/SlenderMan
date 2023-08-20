@@ -3,5 +3,6 @@
     public interface IIntractable
     {
         void Interact(Inventory inventory);
+        bool Interacted { get; }
     }
 }

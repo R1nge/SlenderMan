@@ -6,9 +6,11 @@ namespace Characters.Human.Interact
 {
     public class Door : NetworkBehaviour, IIntractable
     {
+        public bool Interacted { get; }
         [SerializeField] private NetworkAnimator animator;
         private bool _open;
         private static readonly int Open = Animator.StringToHash("Open");
+
 
         public void Interact(Inventory inventory)
         {

@@ -6,6 +6,7 @@ namespace Game
 {
     public class Note : NetworkBehaviour, IIntractable
     {
+        public bool Interacted { get; }
         private NotesManager _notesManager;
 
         private void Awake()
