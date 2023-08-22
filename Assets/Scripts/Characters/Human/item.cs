@@ -15,8 +15,7 @@ namespace Characters.Human
             None,
             Gasoline = 1,
             Battery = 2,
-            KeyHouseWithToilet = 3,
-            Shotgun = 4
+            KeyHouseWithToilet = 3
         }
 
         public enum EquipType
