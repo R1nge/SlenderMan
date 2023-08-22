@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Items
 {
-    public class InteractableView : NetworkBehaviour, IIntractable
+    public class InteractableView : NetworkBehaviour, IInteractable
     {
         public event Action OnInteracted;
         [SerializeField] private Item requiredItem;

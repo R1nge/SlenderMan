@@ -35,7 +35,7 @@ namespace Characters.Human.Interact
             Ray ray = new Ray(camera.position, camera.forward);
             if (Physics.Raycast(ray, out var hit, rayDistance))
             {
-                if (hit.transform.TryGetComponent(out IIntractable intractable))
+                if (hit.transform.TryGetComponent(out IInteractable intractable))
                 {
                     intractable.Interact(_inventory);
                     return;
@@ -53,7 +53,7 @@ namespace Characters.Human.Interact
             Ray ray = new Ray(camera.position, camera.forward);
             if (Physics.Raycast(ray, out var hit, rayDistance))
             {
-                if (hit.transform.TryGetComponent(out IIntractable intractable))
+                if (hit.transform.TryGetComponent(out IInteractable intractable))
                 {
                     hand.enabled = !intractable.Interacted;
                 }

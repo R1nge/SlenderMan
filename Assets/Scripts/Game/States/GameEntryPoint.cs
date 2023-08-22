@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -10,7 +9,6 @@ namespace Game.States
     public class GameEntryPoint : NetworkBehaviour
     {
         private PlayerSpawner _playerSpawner;
-        private NotesManager _notesManager;
 
         private void Awake()
         {

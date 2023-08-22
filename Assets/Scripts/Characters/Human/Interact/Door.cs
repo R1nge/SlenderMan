@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Characters.Human.Interact
 {
-    public class Door : NetworkBehaviour, IIntractable
+    public class Door : NetworkBehaviour, IInteractable
     {
         public bool Interacted { get; }
         [SerializeField] private NetworkAnimator animator;

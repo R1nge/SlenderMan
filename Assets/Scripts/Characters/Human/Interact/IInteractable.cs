@@ -1,6 +1,6 @@
 ﻿namespace Characters.Human.Interact
 {
-    public interface IIntractable
+    public interface IInteractable
     {
         void Interact(Inventory inventory);
         bool Interacted { get; }

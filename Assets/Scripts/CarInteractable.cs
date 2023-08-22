@@ -5,7 +5,7 @@ using Items;
 using Unity.Netcode;
 using UnityEngine;
 
-public class Car : NetworkBehaviour
+public class CarInteractable : NetworkBehaviour
 {
     [SerializeField] private InteractableView fuelTank;
     [SerializeField] private InteractableView battery;
