@@ -161,7 +161,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   equipType: 0
-  itemType: 2
+  itemType: 3
   count: 1
 --- !u!1 &7996167527892378974
 GameObject:

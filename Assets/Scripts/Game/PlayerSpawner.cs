@@ -42,7 +42,6 @@ namespace Game
             if (player.TryGet(out NetworkObject networkObject))
             {
                 OnPlayerDied?.Invoke(team, networkObject.gameObject, id);
-                networkObject.Despawn(true);
             }
         }
     }
