@@ -27,9 +27,9 @@ namespace Characters.Human
             if (player.TryGet(out NetworkObject net))
             {
                 NetworkObject.ChangeOwnership(ownerId);
-                if (NetworkObject.TrySetParent(net))
+                if (NetworkObject.TrySetParent(net.transform))
                 {
-                    transform.localPosition = Vector3.zero;
+                    transform.localPosition = net.transform.GetChild(0).GetChild(1).localPosition;
                     transform.rotation = Quaternion.identity;
                 }
                 else

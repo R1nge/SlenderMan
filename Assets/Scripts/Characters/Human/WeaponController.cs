@@ -6,6 +6,7 @@ namespace Characters.Human
     public class WeaponController : NetworkBehaviour
     {
         [SerializeField] private Transform camera;
+        [SerializeField] private Transform weaponHolder;
         [SerializeField] private float pickupDistance;
         private Shotgun _shotgun;
 
@@ -22,8 +23,8 @@ namespace Characters.Human
                     {
                         _shotgun = shotgun;
                         _shotgun.SetOwner(camera);
-                        _shotgun.SetOwnerServerRpc(NetworkObject, NetworkObject.OwnerClientId);
-                        SetShotgunServerRpc(_shotgun.gameObject);
+                        _shotgun.SetOwnerServerRpc(gameObject, NetworkObject.OwnerClientId);
+                        SetOwnerServerRpc(_shotgun.gameObject);
                     }
                     else
                     {
@@ -45,7 +46,7 @@ namespace Characters.Human
         }
 
         [ServerRpc]
-        private void SetShotgunServerRpc(NetworkObjectReference shotgun)
+        private void SetOwnerServerRpc(NetworkObjectReference shotgun)
         {
             if (shotgun.TryGet(out NetworkObject net))
             {
