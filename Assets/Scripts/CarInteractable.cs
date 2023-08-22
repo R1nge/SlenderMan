@@ -20,7 +20,7 @@ public class CarInteractable : NetworkBehaviour
     [ServerRpc(RequireOwnership = false)]
     private void ObjectiveCompleteServerRpc(ObjectiveManager.ObjectiveType objectiveType)
     {
-        StateManager.Instance.ChangeState(StateManager.States.EndGame);
+        StateManager.Instance.ChangeState(StateManager.States.HumanWin);
     }
 
     private void FuelTankOnOnInteracted()

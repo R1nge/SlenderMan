@@ -41,7 +41,8 @@ namespace Game.States
                 case StateManager.States.Game:
                     StartGame();
                     break;
-                case StateManager.States.EndGame:
+                case StateManager.States.HumanWin:
+                case StateManager.States.SlenderWin:
                     EndGame();
                     break;
                 default:

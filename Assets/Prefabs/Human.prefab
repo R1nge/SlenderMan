@@ -1929,6 +1929,7 @@ GameObject:
   - component: {fileID: 1846898825934564646}
   - component: {fileID: 8268617991341926181}
   - component: {fileID: 291168116889938124}
+  - component: {fileID: 4301996482893684366}
   m_Layer: 6
   m_Name: Human
   m_TagString: Untagged
@@ -2306,6 +2307,20 @@ MonoBehaviour:
   objectiveParent: {fileID: 7234935132899498566}
   objectivePrefab: {fileID: 1716184869516345282, guid: 49cbd53cfafc49b4eb8310d54e4e68c2, type: 3}
   taskPrefab: {fileID: 1540220035287759477, guid: 2327d66de606bbf4b8cf8e3d91feec72, type: 3}
+--- !u!114 &4301996482893684366
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4887141664132616284}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36e0eb993a7e47dd92351930c20be4fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  camera: {fileID: 101243555488617055}
+  pickupDistance: 10
 --- !u!1 &4943976116715829301
 GameObject:
   m_ObjectHideFlags: 0

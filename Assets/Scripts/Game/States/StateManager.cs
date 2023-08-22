@@ -34,7 +34,8 @@ namespace Game.States
             None,
             Warmup,
             Game,
-            EndGame
+            HumanWin,
+            SlenderWin
         }
     }
 }

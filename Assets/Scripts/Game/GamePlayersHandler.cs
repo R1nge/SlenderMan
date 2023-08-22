@@ -12,7 +12,7 @@ namespace Game
         [SerializeField] private Spectator spectator;
         private NetworkVariable<int> _humansAlive, _slendersAlive;
         private PlayerSpawner _playerSpawner;
-        
+
         private void Awake()
         {
             _playerSpawner = FindObjectOfType<PlayerSpawner>();
@@ -52,10 +52,14 @@ namespace Game
                 default:
                     throw new ArgumentOutOfRangeException(nameof(team), team, null);
             }
-            
-            if (_humansAlive.Value == 0 || _slendersAlive.Value == 0)
+
+            if (_humansAlive.Value == 0)
             {
-                StateManager.Instance.ChangeState(StateManager.States.EndGame);
+                StateManager.Instance.ChangeState(StateManager.States.SlenderWin);
+            }
+            else if (_slendersAlive.Value == 0)
+            {
+                StateManager.Instance.ChangeState(StateManager.States.HumanWin);
             }
             else
             {
@@ -69,7 +73,7 @@ namespace Game
                         }
                     }
                 };
-                
+
                 SpawnClientRpc(rpc);
             }
 
