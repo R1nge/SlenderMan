@@ -30,7 +30,7 @@ namespace Characters.Human
                 if (NetworkObject.TrySetParent(net.transform))
                 {
                     transform.localPosition = net.transform.GetChild(0).GetChild(1).localPosition;
-                    transform.rotation = Quaternion.identity;
+                    transform.localRotation = Quaternion.Euler(new Vector3(0, 90, 0));
                 }
                 else
                 {
