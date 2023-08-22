@@ -32,14 +32,14 @@ namespace Characters.Human
                 }
             }
 
-            if (_shotgun == null)
-            {
-                Debug.LogError("Don't have a shotgun", this);
-                return;
-            }
-
             if (Input.GetMouseButton(0))
             {
+                if (_shotgun == null)
+                {
+                    Debug.LogError("Don't have a shotgun", this);
+                    return;
+                }
+
                 _shotgun.ShootServerRpc();
             }
         }
@@ -56,6 +56,12 @@ namespace Characters.Human
             {
                 Debug.LogError("Shotgun missing a network object", this);
             }
+        }
+
+        public void Drop()
+        {
+            _shotgun.SetOwner(null);
+            _shotgun.GetComponent<NetworkObject>().TryRemoveParent();
         }
     }
 }

@@ -10,12 +10,14 @@ namespace Characters.Human
     {
         private PlayerSpawner _playerSpawner;
         private Inventory _inventory;
-
+        private WeaponController _weaponController;
+        
         private void Awake()
         {
             _playerSpawner = FindObjectOfType<PlayerSpawner>();
             _playerSpawner.OnPlayerDied += PlayerDied;
             _inventory = GetComponent<Inventory>();
+            _weaponController = GetComponent<WeaponController>();
         }
 
         private void PlayerDied(Teams team, GameObject player, ulong playerId)
@@ -37,6 +39,8 @@ namespace Characters.Human
 
             ItemDataManager.Instance.SpawnItem(_inventory.CurrentHandItem.Value.itemType, 1, transform.position,
                 Quaternion.identity);
+            
+            _weaponController.Drop();
 
             NetworkObject.Despawn(true);
         }
