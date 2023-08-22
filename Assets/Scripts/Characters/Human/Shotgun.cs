@@ -22,9 +22,25 @@ namespace Characters.Human
         }
 
         [ServerRpc(RequireOwnership = false)]
-        public void SetOwnerServerRpc(ulong ownerId)
+        public void SetOwnerServerRpc(NetworkObjectReference player, ulong ownerId)
         {
-            NetworkObject.ChangeOwnership(ownerId);
+            if (player.TryGet(out NetworkObject net))
+            {
+                NetworkObject.ChangeOwnership(ownerId);
+                if (NetworkObject.TrySetParent(net))
+                {
+                    transform.localPosition = Vector3.zero;
+                    transform.rotation = Quaternion.identity;
+                }
+                else
+                {
+                    Debug.LogError("Can't set shotgun parent", this);
+                }
+            }
+            else
+            {
+                Debug.LogError("Network object is missing on a player", this);
+            }
         }
 
         [ServerRpc]

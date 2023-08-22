@@ -22,7 +22,7 @@ namespace Characters.Human
                     {
                         _shotgun = shotgun;
                         _shotgun.SetOwner(camera);
-                        _shotgun.SetOwnerServerRpc(NetworkObject.OwnerClientId);
+                        _shotgun.SetOwnerServerRpc(NetworkObject, NetworkObject.OwnerClientId);
                     }
                     else
                     {

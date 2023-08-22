@@ -9,13 +9,14 @@ namespace Characters.Human
         public EquipType equipType;
         public ItemType itemType;
         public uint count;
-        
+
         public enum ItemType
         {
             None,
             Gasoline = 1,
             Battery = 2,
-            KeyHouseWithToilet = 3
+            KeyHouseWithToilet = 3,
+            Shotgun = 4
         }
 
         public enum EquipType
