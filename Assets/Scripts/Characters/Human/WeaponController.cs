@@ -23,6 +23,7 @@ namespace Characters.Human
                         _shotgun = shotgun;
                         _shotgun.SetOwner(camera);
                         _shotgun.SetOwnerServerRpc(NetworkObject, NetworkObject.OwnerClientId);
+                        SetShotgunServerRpc(_shotgun.gameObject);
                     }
                     else
                     {
@@ -40,6 +41,20 @@ namespace Characters.Human
             if (Input.GetMouseButton(0))
             {
                 _shotgun.ShootServerRpc();
+            }
+        }
+
+        [ServerRpc]
+        private void SetShotgunServerRpc(NetworkObjectReference shotgun)
+        {
+            if (shotgun.TryGet(out NetworkObject net))
+            {
+                _shotgun = net.GetComponent<Shotgun>();
+                _shotgun.SetOwner(camera);
+            }
+            else
+            {
+                Debug.LogError("Shotgun missing a network object", this);
             }
         }
     }
