@@ -1,4 +1,5 @@
-﻿using Items;
+﻿using System;
+using Items;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -6,6 +7,7 @@ namespace Characters.Human
 {
     public class Inventory : NetworkBehaviour
     {
+        public event Action<Item> OnHandItemSwapped;
         [SerializeField] private int maxSize;
         [SerializeField] private Transform hand;
         private NetworkList<Item> _pocketItems;
@@ -28,14 +30,18 @@ namespace Characters.Human
         {
             if (item.equipType == Item.EquipType.Hand)
             {
-                if (_handItem.Value.itemType == item.itemType)
+                if (_handItem.Value.itemType != Item.ItemType.None)
                 {
-                    Debug.LogError("Hand is full");
-                    return false;
+                    OnHandItemSwapped?.Invoke(item);
                 }
 
                 _handItem.Value = item;
-                SpawnClientRpc(item);
+
+                if (item.spawn)
+                {
+                    SpawnClientRpc(item);
+                }
+
                 return true;
             }
 
@@ -47,7 +53,7 @@ namespace Characters.Human
                     return true;
                 }
 
-                Debug.LogError("Pockets are full. Can't add new item.");
+                Debug.LogError("Pockets are full. Can't add a new item.");
                 return false;
             }
 
@@ -151,13 +157,6 @@ namespace Characters.Human
         {
             if (!IsOwner) return;
 
-            if (Input.GetKeyDown(KeyCode.H))
-            {
-                DropServerRpc(_handItem.Value);
-                Debug.LogError("Drop hand item");
-                return;
-            }
-
             if (_pocketItems.Count == 0)
             {
                 _index = 0;
@@ -199,7 +198,7 @@ namespace Characters.Human
         }
 
         [ServerRpc(RequireOwnership = false)]
-        private void DropServerRpc(Item item)
+        public void DropServerRpc(Item item)
         {
             if (item.equipType == Item.EquipType.Pocket)
             {
@@ -222,9 +221,14 @@ namespace Characters.Human
             }
             else if (item.equipType == Item.EquipType.Hand)
             {
-                ItemDataManager.Instance.SpawnItem(item.itemType, item.count, transform.position, Quaternion.identity);
+                if (item.spawn)
+                {
+                    ItemDataManager.Instance.SpawnItem(item.itemType, item.count, transform.position,
+                        Quaternion.identity);
+                    DropClientRpc(item);
+                }
+
                 _handItem = new NetworkVariable<Item>();
-                DropClientRpc(item);
             }
         }
 

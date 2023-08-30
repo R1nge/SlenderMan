@@ -1994,6 +1994,7 @@ GameObject:
   - component: {fileID: 291168116889938124}
   - component: {fileID: 4301996482893684366}
   - component: {fileID: 4144025155750439406}
+  - component: {fileID: 7069341893497734077}
   m_Layer: 6
   m_Name: Human
   m_TagString: Untagged
@@ -2384,8 +2385,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   camera: {fileID: 101243555488617055}
-  weaponHolder: {fileID: 3755346886285190392}
-  pickupDistance: 10
 --- !u!114 &4144025155750439406
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2398,6 +2397,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9110f4fb65914825aa0c2e27450d9b22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &7069341893497734077
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4887141664132616284}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 372adbff428942738bd81e5c3f477804, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  camera: {fileID: 101243555488617055}
+  pickupDistance: 10
 --- !u!1 &4943976116715829301
 GameObject:
   m_ObjectHideFlags: 0

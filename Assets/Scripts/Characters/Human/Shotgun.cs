@@ -10,10 +10,12 @@ namespace Characters.Human
         [SerializeField] private float shootDistance;
         private Transform _camera;
         private PlayerSpawner _playerSpawner;
+        private Rigidbody _rigidbody;
 
         private void Awake()
         {
             _playerSpawner = FindObjectOfType<PlayerSpawner>();
+            _rigidbody = GetComponent<Rigidbody>();
         }
 
         public void SetOwner(Transform camera)
@@ -27,6 +29,8 @@ namespace Characters.Human
             if (player.TryGet(out NetworkObject net))
             {
                 NetworkObject.ChangeOwnership(ownerId);
+                SetRigidbodyKinematic(true);
+                SetOwnerClientRpc();
                 if (NetworkObject.TrySetParent(net.transform))
                 {
                     transform.localPosition = net.transform.GetChild(0).GetChild(1).localPosition;
@@ -41,6 +45,12 @@ namespace Characters.Human
             {
                 Debug.LogError("Network object is missing on a player", this);
             }
+        }
+
+        [ClientRpc]
+        private void SetOwnerClientRpc()
+        {
+            SetRigidbodyKinematic(true);
         }
 
         [ServerRpc]
@@ -62,5 +72,20 @@ namespace Characters.Human
                 }
             }
         }
+
+        [ServerRpc]
+        public void DropServerRpc()
+        {
+            SetRigidbodyKinematic(false);
+            DropClientRpc();
+        }
+
+        [ClientRpc]
+        private void DropClientRpc()
+        {
+            SetRigidbodyKinematic(false);
+        }
+
+        private void SetRigidbodyKinematic(bool kinematic) => _rigidbody.isKinematic = kinematic;
     }
 }

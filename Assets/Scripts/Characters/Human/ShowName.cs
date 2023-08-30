@@ -18,7 +18,7 @@ namespace Characters.Human
             var ray = new Ray(camera.position, camera.forward);
             if (Physics.Raycast(ray, out var hit, rayDistance))
             {
-                if (hit.transform.TryGetComponent(out HumanInteractController human))
+                if (hit.transform.TryGetComponent(out InteractIconController human))
                 {
                     if (hit.transform.TryGetComponent(out NetworkObject networkObject))
                     {

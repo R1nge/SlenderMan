@@ -10,11 +10,12 @@ namespace Items
         [SerializeField] private Item.EquipType equipType;
         [SerializeField] private Item.ItemType itemType;
         [SerializeField] private uint count;
+        [SerializeField] private bool spawnModelOnPickup;
         private Item _item;
 
         private void Awake()
         {
-            _item = new Item(equipType, itemType, count);
+            _item = new Item(equipType, itemType, count, spawnModelOnPickup);
         }
 
         public void SetCount(uint newCount) => count = newCount;
@@ -31,7 +32,10 @@ namespace Items
             {
                 if (playerGo.GetComponent<Inventory>().Add(_item))
                 {
-                    Destroy();
+                    if (spawnModelOnPickup)
+                    {
+                        Destroy();
+                    }
                 }
             }
         }

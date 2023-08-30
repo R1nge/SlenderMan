@@ -163,6 +163,7 @@ MonoBehaviour:
   equipType: 1
   itemType: 2
   count: 1
+  spawnModelOnPickup: 1
 --- !u!1 &8034693443451734461
 GameObject:
   m_ObjectHideFlags: 0

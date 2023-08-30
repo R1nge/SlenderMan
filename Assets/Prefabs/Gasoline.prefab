@@ -163,6 +163,7 @@ MonoBehaviour:
   equipType: 1
   itemType: 1
   count: 2
+  spawnModelOnPickup: 1
 --- !u!1001 &6703779585026833835
 PrefabInstance:
   m_ObjectHideFlags: 0
