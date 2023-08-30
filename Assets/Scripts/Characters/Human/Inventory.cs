@@ -96,7 +96,7 @@ namespace Characters.Human
                 {
                     if (_handItem.Value.count >= item.count)
                     {
-                        _handItem = new NetworkVariable<Item>();
+                        _handItem.Value = new Item();
                     }
                 }
             }
@@ -228,7 +228,7 @@ namespace Characters.Human
                     DropClientRpc(item);
                 }
 
-                _handItem = new NetworkVariable<Item>();
+                _handItem.Value = new Item();
             }
         }
 

@@ -1,7 +1,16 @@
-﻿namespace Characters.Human.Pickup
+﻿using Unity.Netcode;
+
+namespace Characters.Human.Pickup
 {
-    public interface IPickupable
+    public abstract class Pickupable : NetworkBehaviour
     {
-        void Pickup(Inventory inventory);
+        private bool _hasOwner;
+
+        public void SetOwner() => _hasOwner = true;
+
+        public void RemoveOwner() => _hasOwner = false;
+
+        public bool HasOwner => _hasOwner;
+        public abstract void Pickup(Inventory inventory);
     }
 }

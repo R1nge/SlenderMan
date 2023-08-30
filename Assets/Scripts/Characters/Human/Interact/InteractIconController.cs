@@ -28,9 +28,9 @@ namespace Characters.Human.Interact
                 {
                     hand.enabled = !intractable.Interacted;
                 }
-                else if (hit.transform.TryGetComponent(out IPickupable _))
+                else if (hit.transform.TryGetComponent(out Pickupable pickupable))
                 {
-                    hand.enabled = true;
+                    hand.enabled = !pickupable.HasOwner;
                 }
                 else
                 {

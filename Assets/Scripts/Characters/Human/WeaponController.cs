@@ -1,4 +1,5 @@
-﻿using Unity.Netcode;
+﻿using Items;
+using Unity.Netcode;
 using UnityEngine;
 
 namespace Characters.Human
@@ -58,6 +59,7 @@ namespace Characters.Human
 
         public void Drop()
         {
+            _shotgun.GetComponent<ItemView>().RemoveOwner();
             _shotgun.SetOwner(null);
             _shotgun.GetComponent<NetworkObject>().TryRemoveParent();
             _shotgun.DropServerRpc();

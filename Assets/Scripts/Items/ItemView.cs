@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Items
 {
-    public class ItemView : NetworkBehaviour, IPickupable
+    public class ItemView : Pickupable
     {
         [SerializeField] private Item.EquipType equipType;
         [SerializeField] private Item.ItemType itemType;
@@ -20,7 +20,8 @@ namespace Items
 
         public void SetCount(uint newCount) => count = newCount;
 
-        public void Pickup(Inventory inventory)
+
+        public override void Pickup(Inventory inventory)
         {
             AddServerRpc(inventory.gameObject);
         }
@@ -32,6 +33,8 @@ namespace Items
             {
                 if (playerGo.GetComponent<Inventory>().Add(_item))
                 {
+                    SetOwner();
+                    SetOwnerClientRpc();
                     if (spawnModelOnPickup)
                     {
                         Destroy();
@@ -39,6 +42,9 @@ namespace Items
                 }
             }
         }
+
+        [ClientRpc]
+        private void SetOwnerClientRpc() => SetOwner();
 
         private void Destroy()
         {

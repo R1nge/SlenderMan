@@ -27,22 +27,28 @@ namespace Characters.Human
                 Ray ray = new Ray(camera.position, camera.forward);
                 if (Physics.Raycast(ray, out var hit, pickupDistance))
                 {
-                    if (hit.transform.TryGetComponent(out Shotgun shotgun))
-                    {
-                        shotgun.SetOwner(camera);
-                        shotgun.SetOwnerServerRpc(gameObject, NetworkObject.OwnerClientId);
-                        _weaponController.SetOwnerServerRpc(shotgun.gameObject);
-                    }
-
                     if (hit.transform.TryGetComponent(out IInteractable intractable))
                     {
                         intractable.Interact(_inventory);
                         return;
                     }
 
-                    if (hit.transform.TryGetComponent(out IPickupable pickupable))
+                    if (hit.transform.TryGetComponent(out Pickupable pickupable))
                     {
+                        if (pickupable.HasOwner)
+                        {
+                            Debug.LogError("Can't pickup, someone already is holding it");
+                            return;
+                        }
+
                         pickupable.Pickup(_inventory);
+                        
+                        if (pickupable.transform.TryGetComponent(out Shotgun shotgun))
+                        {
+                            shotgun.SetOwner(camera);
+                            shotgun.SetOwnerServerRpc(gameObject, NetworkObject.OwnerClientId);
+                            _weaponController.SetOwnerServerRpc(shotgun.gameObject);
+                        }
                     }
                 }
             }
