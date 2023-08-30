@@ -30,11 +30,13 @@ namespace Characters.Human
             {
                 NetworkObject.ChangeOwnership(ownerId);
                 SetRigidbodyKinematic(true);
-                SetOwnerClientRpc();
+                SetKinematicClientRpc();
+
                 if (NetworkObject.TrySetParent(net.transform))
                 {
                     transform.localPosition = net.transform.GetChild(0).GetChild(1).localPosition;
                     transform.localRotation = Quaternion.Euler(new Vector3(0, 90, 0));
+                    SetPositionClientRpc(player);
                 }
                 else
                 {
@@ -48,9 +50,19 @@ namespace Characters.Human
         }
 
         [ClientRpc]
-        private void SetOwnerClientRpc()
+        private void SetKinematicClientRpc()
         {
             SetRigidbodyKinematic(true);
+        }
+
+        [ClientRpc]
+        private void SetPositionClientRpc(NetworkObjectReference player)
+        {
+            if (player.TryGet(out NetworkObject net))
+            {
+                transform.localPosition = net.transform.GetChild(0).GetChild(1).localPosition;
+                transform.localRotation = Quaternion.Euler(new Vector3(0, 90, 0));
+            }
         }
 
         [ServerRpc]
@@ -73,7 +85,7 @@ namespace Characters.Human
             }
         }
 
-        [ServerRpc]
+        [ServerRpc(RequireOwnership = false)]
         public void DropServerRpc()
         {
             SetRigidbodyKinematic(false);
