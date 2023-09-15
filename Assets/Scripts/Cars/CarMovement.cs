@@ -9,7 +9,7 @@ namespace Cars
     {
         public bool Interacted { get; }
         
-        //TODO: disable player movement, enable car movement 
+        //TODO: destroy player, spawn spectator
         public void Interact(Inventory inventory)
         {
             var player = inventory.GetComponent<NetworkObject>();

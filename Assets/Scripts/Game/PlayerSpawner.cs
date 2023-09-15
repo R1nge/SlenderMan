@@ -36,12 +36,16 @@ namespace Game
             OnPlayerSpawned?.Invoke(team, instance, id);
         }
 
-        public void DeSpawn(NetworkObjectReference player, ulong id)
+        [ServerRpc(RequireOwnership = false)]
+        public void DeSpawnServerRpc(NetworkObjectReference player, ulong id)
         {
             var team = Lobby.Lobby.Instance.GetData(id).Team;
-            if (player.TryGet(out NetworkObject networkObject))
+            if (player.TryGet(out NetworkObject net))
             {
-                OnPlayerDied?.Invoke(team, networkObject.gameObject, id);
+                if (net.OwnerClientId == id && IsServer)
+                {
+                    OnPlayerDied?.Invoke(team, player, id);
+                }
             }
         }
     }

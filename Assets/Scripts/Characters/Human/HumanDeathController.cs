@@ -24,8 +24,10 @@ namespace Characters.Human
         {
             if (playerId == NetworkObject.OwnerClientId)
             {
-                DropItemsServerRpc();
+                
             }
+            
+            DropItemsServerRpc();
         }
 
         [ServerRpc]

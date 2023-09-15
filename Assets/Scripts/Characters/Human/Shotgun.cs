@@ -75,7 +75,7 @@ namespace Characters.Human
                 {
                     if (slender.TryGetComponent(out NetworkObject net))
                     {
-                        _playerSpawner.DeSpawn(net, net.OwnerClientId);
+                        _playerSpawner.DeSpawnServerRpc(net, net.OwnerClientId);
                     }
                     else
                     {
